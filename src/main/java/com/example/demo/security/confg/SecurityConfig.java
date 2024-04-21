@@ -8,15 +8,18 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 @EnableWebSecurity
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final MyUserDetailService userDetailsService;
+    private final UserDetailsService userDetailsService;
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -28,28 +31,26 @@ public class SecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) ->
                         authorize
-                                .requestMatchers(
-                                        "/login/**")
+                                .requestMatchers(antMatcher("/login"),
+                                        antMatcher("/login/**"), antMatcher("/register"),
+                                        antMatcher("/registerProcessing"))
                                 .permitAll()
 
                                 .anyRequest().authenticated()
                 )
                 .formLogin(
                         form -> form
-                                .loginPage("/login.html")
+                                .loginPage("/login")
                                 .usernameParameter("username")
                                 .passwordParameter("password")
                                 .loginProcessingUrl("/loginProcessing")
                                 .defaultSuccessUrl("/index", true)
-                                .permitAll()
-                ).build();
+                                .permitAll()).build();
     }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .userDetailsService(userDetailsService)
+        auth.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
 }
-

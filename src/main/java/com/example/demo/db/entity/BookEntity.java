@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.domain.Persistable;
 
 @Entity
 @Table(name = "book")
@@ -12,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class BookEntity {
+public class BookEntity implements Persistable<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookIdSeqGenerator")
@@ -33,4 +34,9 @@ public class BookEntity {
 
     @Column(name = "stock_count")
     Integer stockCount;
+
+    @Override
+    public boolean isNew() {
+        return id == null;
+    }
 }

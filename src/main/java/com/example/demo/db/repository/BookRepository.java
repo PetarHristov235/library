@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 
 @Repository
 public interface BookRepository extends JpaRepository<BookEntity, Long> {
@@ -20,6 +19,11 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
             SELECT b FROM BookEntity b
             WHERE b.genre = :genre""")
     BookEntity findBooksByGenre(@Param("genre") String bookName);
+
+    @Query("""
+        DELETE FROM BookEntity b
+        WHERE b.bookName = :bookName""")
+    void deleteBookByBookName(@Param("bookName") String bookName);
 
 
 
