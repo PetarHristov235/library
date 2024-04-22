@@ -1,6 +1,11 @@
 package com.example.demo.controller;
 
+import com.example.demo.db.entity.BookEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 public class BookController {
 
@@ -11,7 +16,7 @@ public class BookController {
         ModelAndView modelAndView = new ModelAndView("filteredBooks");
 
         //Search by filterText in the specific type
-        List<Book> filtered = null;
+        List<BookEntity> filtered = null;
         if ("author".equals(filterType)) {
             filtered = bookService.searchBooksByAuthor(filterText);
         } else if ("genre".equals(filterType)) {
@@ -20,7 +25,8 @@ public class BookController {
             filtered = bookService.searchBooksByTitle(filterText);
         }
 
-        model.addAttribute("searchResults", filtered);
+        modelAndView.addObject("searchResults", filtered);
+
 
         return modelAndView;
     }
@@ -28,7 +34,7 @@ public class BookController {
     @GetMapping("/randomBook")
     public ModelAndView randomBook() {
 
-        Book randomBook = bookService.getRandomBook();
+        BookEntity randomBook = bookService.getRandomBook();
 
         if (randomBook != null) {
             return new ModelAndView("redirect:/bookDetails?id=" + randomBook.getId());
@@ -39,7 +45,7 @@ public class BookController {
 
     @GetMapping("/bookDetails")
     public ModelAndView bookDetails(@RequestParam Long id) {
-        Book book = bookService.getBookById(id);
+        BookEntity book = bookService.getBookById(id);
 
         ModelAndView modelAndView = new ModelAndView("book_details");
 
