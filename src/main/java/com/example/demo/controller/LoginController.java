@@ -10,6 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,9 +30,12 @@ public class LoginController {
         return "register";
     }
 
-    @GetMapping(value = "/index")
-    public String index() {
-        return "index";
+    @GetMapping(value = "/")
+    public ModelAndView index() {
+        ModelAndView index = new ModelAndView("index");
+        List<BooksEntity> books = service.findAllBooks();
+        index.addObject("books", books);
+        return index;
     }
 
     @PostMapping("/registerProcessing")

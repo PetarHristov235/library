@@ -1,28 +1,97 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmls:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Library</title>
-    <style>
-        table, th, td {
-            border: 1px solid black;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 15px;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <title>Заглавие</title>
+    <base href="/">
+    <link rel="stylesheet"  type="text/css" href="css/styles.css">
+    </base>
 </head>
+
 <body>
-<h1>Library</h1>
-<table>
-    <tr>
-        <th>Title</th>
-        <th>Author</th>
-    </tr>
-    <tr th:each="book : ${books}">
-        <td th:text="${book.title}">Book Title</td>
-        <td th:text="${book.author}">Author</td>
-    </tr>
-</table>
+
+
+<div class="topnav" id="myNav">
+    <div>
+    <a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
+    </div>
+    <div class="topnav-centered">
+        <a th:href="@{/}"><h1>Име</h1></a>
+    </div>
+
+    <div class="topnav-right">
+        <a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
+        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Вход</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Изход</a>
+    </div>
+</div>
+
+
+<div class="center" >
+    <h1>Книги</h1>
+</div>
+
+
+    <div class="center">
+        <a class="buttons" sec:authorize="hasRole('ADMIN')" th:href="@{/addNewBook}">Добавяне</a>
+    </div>
+
+<form th:action="@{/search}" method="get">
+    <label for="filterType">Търсене по: </label>
+    <select id="filterType" name="filterType">
+        <option value="author">Автор</option>
+        <option value="genre">Жанр</option>
+        <option value="title">Заглавие</option>
+    </select>
+
+    <label for="filterText">Търси: </label>
+    <input type="text" id="filterText" name="filterText">
+
+    <button type="submit">Търсене</button>
+</form>
+
+
+<form th:action="@{/random}" method="get">
+    <button type="submit">Нека изберем за теб</button>
+</form>
+    <table class="tables">
+        <thead >
+        <tr>
+            <div sec:authorize="hasRole('ADMIN')">
+                <th>ID</th>
+            </div>
+            <th>Заглавие</th>
+            <th>Автор</th>
+            <th>Жанр</th>
+            <th>Действие</th>
+        </tr>
+        </thead >
+
+        <tbody>
+        <tr th:each="book : ${books}">
+            <div sec:authorize="hasRole('ADMIN')">
+                <td th:text="${book.id}">id</td>
+            </div>
+            <td th:text="${book.title}">Заглавие</td>
+            <td th:text="${book.author}">Автор</td>
+            <td th:text="${book.genre}">Жанр</td>
+            <td th:text="${book.bookDetails}">Резюме</td>
+            <div sec:authorize="hasRole('ADMIN')">
+                <td>
+                    <a th:href="@{'/editBook/'+${book.id}}">Редактиране</a>
+                    <a th:href="@{'/deleteBook/'+${book.id}}">Изтриване</a>
+                </td>
+            </div>
+            <div sec:authorize="hasRole('USER')">
+                <td>
+                    <a th:href="@{'/orderBook/'+${book.id}}">Поръчай</a>
+                </td>
+            </div>
+        </tr>
+        </tbody>
+    </table>
+
 </body>
+
 </html>

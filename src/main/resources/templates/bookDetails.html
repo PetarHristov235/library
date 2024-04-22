@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Details</title>
+</head>
+<body>
+<h1>Данни за книга</h1>
+
+<div th:if="${book != null}">
+    <h2>Заглавие: <span th:text="${book.title}"></span></h2>
+    <img th:src="${book.image}"/>
+    <p>Автор: <span th:text="${book.author}"></span></p>
+    <p>Жанр: <span th:text="${book.genre}"></span></p>
+    <p>Резюме: <span th:text="${book.description}"></span></p>
+</div>
+
+
+<!--
+<div th:if="${book == null}">
+    <p>Няма такава книга</p>
+</div>
+-->
+
+</body>
+</html>
