@@ -10,9 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,11 +29,8 @@ public class LoginController {
     }
 
     @GetMapping(value = "/")
-    public ModelAndView index() {
-        ModelAndView index = new ModelAndView("index");
-        List<BooksEntity> books = service.findAllBooks();
-        index.addObject("books", books);
-        return index;
+    public String index() {
+        return "redirect:/home";
     }
 
     @PostMapping("/registerProcessing")
@@ -61,7 +56,7 @@ public class LoginController {
                                   Model model) {
         Boolean authenticationSuccessful = userRepository.existByUsernameAndPassword(username, passwordEncoder.encode(password));
         if (authenticationSuccessful) {
-            return "redirect:/index"; // Redirect to home page after successful login
+            return "redirect:/home"; // Redirect to home page after successful login
         } else {
             model.addAttribute("loginError", "Invalid username or password.");
             return "login"; // Redirect back to login page if authentication fails

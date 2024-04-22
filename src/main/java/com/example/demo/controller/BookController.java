@@ -9,6 +9,14 @@ import java.util.List;
 
 public class BookController {
 
+    @GetMapping("/home")
+    public ModelAndView index() {
+        ModelAndView modelAndView = new ModelAndView("index");
+        List<BookEntity> books = service.findAllBooks();
+        modelAndView.addObject("books", books);
+        return modelAndView;
+    }
+
     @GetMapping("/search")
     public ModelAndView searchBooks(@RequestParam String filterType,
                               @RequestParam String filterText) {
