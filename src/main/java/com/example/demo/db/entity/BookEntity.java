@@ -32,6 +32,9 @@ public class BookEntity implements Persistable<Long> {
     @Column(name = "book_details")
     String bookDetails;
 
+    @Column(name = "title")
+    String title;
+
     @Column(name = "stock_count")
     Integer stockCount;
 

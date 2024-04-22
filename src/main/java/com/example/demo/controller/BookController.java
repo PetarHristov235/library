@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.db.entity.BookEntity;
+import com.example.demo.service.BookService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -8,11 +9,13 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 public class BookController {
+    //TODO Im not sure which annotation (@Controller or @RestController) should be used here as we are using with MVC
+    BookService bookService;
 
     @GetMapping("/home")
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("index");
-        List<BookEntity> books = service.findAllBooks();
+        List<BookEntity> books = bookService.findAllBooks();
         modelAndView.addObject("books", books);
         return modelAndView;
     }
