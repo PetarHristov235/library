@@ -2,15 +2,18 @@ package com.example.demo.controller;
 
 import com.example.demo.db.entity.BookEntity;
 import com.example.demo.service.BookService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+@RestController
+@RequiredArgsConstructor
 public class BookController {
-    //TODO Im not sure which annotation (@Controller or @RestController) should be used here as we are using with MVC
-    BookService bookService;
+    private final BookService bookService;
 
     @GetMapping("/home")
     public ModelAndView index() {
