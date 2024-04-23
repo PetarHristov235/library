@@ -31,12 +31,27 @@ public class SecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) ->
                         authorize
-                                .requestMatchers(antMatcher("/login"),
-                                        antMatcher("/login/**"), antMatcher("/register"),
-                                        antMatcher("/registerProcessing"))
+                                .requestMatchers(
+                                        antMatcher("/login"),
+                                        antMatcher("/login/**"),
+                                        antMatcher("/register"),
+                                        antMatcher("/registerProcessing"),
+                                        antMatcher("/"),
+                                        antMatcher("index"),
+                                        antMatcher("css/**"),
+                                        //For testing
+                                        antMatcher("/addBook"),
+                                        antMatcher("/listUsers"),
+                                        antMatcher("/random"),
+                                        antMatcher("/search")
+                                )
                                 .permitAll()
 
                                 .anyRequest().authenticated()
+                )
+                .logout(
+                        logout -> logout
+                                .logoutSuccessUrl("/")
                 )
                 .formLogin(
                         form -> form
@@ -44,7 +59,7 @@ public class SecurityConfig {
                                 .usernameParameter("username")
                                 .passwordParameter("password")
                                 .loginProcessingUrl("/loginProcessing")
-                                .defaultSuccessUrl("/index", true)
+                                .defaultSuccessUrl("/", true)
                                 .permitAll()).build();
     }
 

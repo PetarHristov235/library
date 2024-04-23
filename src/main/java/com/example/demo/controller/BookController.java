@@ -3,9 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.db.entity.BookEntity;
 import com.example.demo.service.BookService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -15,7 +13,7 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
 
-    @GetMapping("/home")
+    @GetMapping("/")
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView("index");
         List<BookEntity> books = bookService.findAllBooks();
@@ -45,7 +43,7 @@ public class BookController {
         return modelAndView;
     }
 
-    @GetMapping("/randomBook")
+    @GetMapping("/random")
     public ModelAndView randomBook() {
 
         BookEntity randomBook = bookService.getRandomBook();
@@ -61,10 +59,50 @@ public class BookController {
     public ModelAndView bookDetails(@RequestParam Long id) {
         BookEntity book = bookService.getBookById(id);
 
-        ModelAndView modelAndView = new ModelAndView("book_details");
+        ModelAndView modelAndView = new ModelAndView("bookDetails");
 
         modelAndView.addObject("book", book);
 
         return modelAndView;
+    }
+
+    @GetMapping("/addBook")
+    public ModelAndView addBook(){
+        BookEntity book = new BookEntity();
+        ModelAndView modelAndView = new ModelAndView("addBook");
+        modelAndView.addObject("book", book);
+        return modelAndView;
+    }
+
+    @PostMapping("/saveBook")
+    public String addBook(@ModelAttribute("book") BookEntity book) {
+
+       // bookService.saveBook(book);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/editBook/{id}")
+    public ModelAndView editBook(@PathVariable(value="id")int id) {
+        BookEntity book=bookService.findAllBooks().get(id);
+
+        ModelAndView modelAndView = new ModelAndView("editBook");
+        modelAndView.addObject("book",book);
+
+        return modelAndView;
+    }
+
+    @PostMapping("/saveEdit")
+    public String saveBook(@ModelAttribute("book") BookEntity book) {
+
+        //bookService.saveBook(book);
+
+        return "redirect:/";
+    }
+
+    @GetMapping(value="/deleteBook/{id}")
+    public String deleteBook(@PathVariable Long id) {
+        bookService.deleteBookById(id);
+        return "redirect:/";
     }
 }

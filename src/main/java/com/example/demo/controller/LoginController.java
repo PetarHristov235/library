@@ -28,10 +28,7 @@ public class LoginController {
         return "register";
     }
 
-    @GetMapping(value = "/")
-    public String index() {
-        return "redirect:/home";
-    }
+
 
     @PostMapping("/registerProcessing")
     public String registerProcessing(@RequestParam("username") String username,

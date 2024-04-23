@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Добавяне</title>
+</head>
+
+<body>
+
+<div class="center" >
+    <h1>Добавяне на книга</h1>
+</div>
+
+<div class="container">
+    <form method="post" role="form" th:action="@{/saveBook}" th:object="${book}">
+
+        <div class="row">
+            <div class="col-25">
+                <label>Корица</label>
+            </div>
+<!--            <div class="col-75"><input id="cover" name="cover"  th:field="*{cover}" type="image"/></div>-->
+            <div class="col-75">
+                <input id="cover" name="cover"   type="file" accept="image/*"/>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-25"><label>Заглавие</label></div>
+            <div class="col-75">
+                <input id="bookName" name="title" placeholder="Въведи заглавие... " th:field="*{bookName}" type="text"/></div>
+                <p th:errors = "*{bookName}"  th:if="${#fields.hasErrors('bookName')}"></p>
+        </div>
+
+        <div class="row">
+            <div class="col-25"><label>Автор</label></div>
+            <div class="col-75"><input id="author" name="author" placeholder="Въведи автор..." th:field="*{author}" type="text"/></div>
+            <p th:errors = "*{author}"  th:if="${#fields.hasErrors('author')}"></p>
+        </div>
+
+        <div class="row">
+            <div class="col-25"><label>Жанр</label></div>
+            <div class="col-75"><input id="genre" name="genre" placeholder="Въведи жанр..." th:field="*{genre}" type="text"/></div>
+            <p th:errors = "*{genre}"  th:if="${#fields.hasErrors('genre')}"></p>
+        </div>
+
+        <div class="row">
+            <div class="col-25"><label>Резюме</label></div>
+            <div class="col-75"><input id="bookDetails" name="bookDetails" placeholder="Въведи резюме..." th:field="*{bookDetails}" type="text"/></div>
+            <p th:errors = "*{bookDetails}"  th:if="${#fields.hasErrors('bookDetails')}"></p>
+        </div>
+
+        <div class="row">
+            <div class="col-25"><label>Брой</label></div>
+            <div class="col-75"><input id="stockCount" name="stockCount" placeholder="Въведи количество..." th:field="*{stockCount}" type="text"/></div>
+            <p th:errors = "*{stockCount}"  th:if="${#fields.hasErrors('stockCount')}"></p>
+        </div>
+        <div class="row">
+            <div class="center">
+                <input type="submit" value="Добави">
+            </div>
+        </div>
+
+    </form>
+</div>
+</body>
+</html>
