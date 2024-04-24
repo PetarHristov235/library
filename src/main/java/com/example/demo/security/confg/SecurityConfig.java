@@ -38,11 +38,12 @@ public class SecurityConfig {
                                         antMatcher("/registerProcessing"),
                                         antMatcher("/"),
                                         antMatcher("index"),
-                                        antMatcher("css/**"),
+                                        antMatcher("/css/**"),
                                         //For testing
                                         antMatcher("/addBook"),
                                         antMatcher("/listUsers"),
                                         antMatcher("/random"),
+                                        antMatcher("/filteredBooks"),
                                         antMatcher("/search")
                                 )
                                 .permitAll()

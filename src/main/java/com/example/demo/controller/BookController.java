@@ -37,8 +37,8 @@ public class BookController {
             filtered = bookService.searchBooksByTitle(filterText);
         }
 
-        modelAndView.addObject("searchResults", filtered);
 
+        modelAndView.addObject("searchResults", filtered);
 
         return modelAndView;
     }
@@ -102,7 +102,7 @@ public class BookController {
 
     @GetMapping(value="/deleteBook/{id}")
     public String deleteBook(@PathVariable Long id) {
-        bookService.deleteBookById(id);
+        //bookService.deleteBookById(id);
         return "redirect:/";
     }
 }

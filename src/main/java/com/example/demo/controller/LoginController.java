@@ -53,7 +53,7 @@ public class LoginController {
                                   Model model) {
         Boolean authenticationSuccessful = userRepository.existByUsernameAndPassword(username, passwordEncoder.encode(password));
         if (authenticationSuccessful) {
-            return "redirect:/home"; // Redirect to home page after successful login
+            return "redirect:/"; // Redirect to home page after successful login
         } else {
             model.addAttribute("loginError", "Invalid username or password.");
             return "login"; // Redirect back to login page if authentication fails
