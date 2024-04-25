@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.db.entity.UserEntity;
+import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -14,28 +15,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 
-
+    private UserService userService;
 
     @GetMapping("/listUsers")
     public ModelAndView listUsers() {
         ModelAndView modelAndView = new ModelAndView("users");
-//        List<UserEntity> users = userService.findAllUsers();
-//        modelAndView.addObject("users", users);
+        List<UserEntity> users = userService.findAllUsers();
+        modelAndView.addObject("users", users);
         return modelAndView;
     }
 
     @GetMapping("/profile")
     public ModelAndView showProfile() {
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
+        UserEntity currentUser = userService.getUserByUsername(username);
 
-//        UserEntity currentUser = UserService.getByUsername(username);
-//
         ModelAndView modelAndView = new ModelAndView("profile");
-//        modelAndView.addObject("userProfile", currentUser);
-
+        modelAndView.addObject("userProfile", currentUser);
         return modelAndView;
     }
 }

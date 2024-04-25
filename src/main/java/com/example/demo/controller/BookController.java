@@ -77,8 +77,7 @@ public class BookController {
     @PostMapping("/saveBook")
     public String addBook(@ModelAttribute("book") BookEntity book) {
 
-       // bookService.saveBook(book);
-
+        bookService.saveBook(book);
         return "redirect:/";
     }
 
@@ -88,21 +87,20 @@ public class BookController {
 
         ModelAndView modelAndView = new ModelAndView("editBook");
         modelAndView.addObject("book",book);
-
         return modelAndView;
     }
 
     @PostMapping("/saveEdit")
     public String saveBook(@ModelAttribute("book") BookEntity book) {
 
-        //bookService.saveBook(book);
+        bookService.saveBook(book);
 
         return "redirect:/";
     }
 
     @GetMapping(value="/deleteBook/{id}")
     public String deleteBook(@PathVariable Long id) {
-        //bookService.deleteBookById(id);
+        bookService.deleteBookById(id);
         return "redirect:/";
     }
 }

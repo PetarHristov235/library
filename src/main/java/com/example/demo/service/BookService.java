@@ -11,4 +11,6 @@ public interface BookService {
     BookEntity getRandomBook();
     List<BookEntity> searchBooksByTitle(String title);
     BookEntity getBookById(Long id);
+    BookEntity saveBook(BookEntity book);
+    void deleteBookById(Long id);
 }

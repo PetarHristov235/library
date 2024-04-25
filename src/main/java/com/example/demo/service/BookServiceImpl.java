@@ -2,13 +2,16 @@ package com.example.demo.service;
 
 import com.example.demo.db.entity.BookEntity;
 import com.example.demo.db.repository.BookRepository;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Random;
 
 @Service
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 public class BookServiceImpl implements  BookService {
     private final BookRepository bookRepository;
@@ -47,5 +50,15 @@ public class BookServiceImpl implements  BookService {
     @Override
     public BookEntity getBookById(Long id) {
         return bookRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public BookEntity saveBook(BookEntity book) {
+        return bookRepository.save(book);
+    }
+
+    @Override
+    public void deleteBookById(Long id) {
+        bookRepository.deleteById(id);
     }
 }
