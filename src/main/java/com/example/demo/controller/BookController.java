@@ -63,8 +63,8 @@ public class BookController {
         }
     }
 
-    @GetMapping("/bookDetails")
-    public ModelAndView bookDetails(@RequestParam Long id) {
+    @GetMapping("/books/{id}")
+    public ModelAndView bookDetails(@PathVariable Long id) {
         BookEntity book = bookService.getBookById(id);
 
         ModelAndView modelAndView = new ModelAndView("bookDetails");

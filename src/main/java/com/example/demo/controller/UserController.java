@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,5 +36,17 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView("profile");
         modelAndView.addObject("userProfile", currentUser);
         return modelAndView;
+    }
+
+    @GetMapping(value="/deleteUser/{id}")
+    public String deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return "redirect:/users";
+    }
+
+    @GetMapping(value="/banUser/{id}")
+    public String deleteUser(@PathVariable Long id) {
+        userService.banUser(id);
+        return "redirect:/users";
     }
 }

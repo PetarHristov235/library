@@ -8,6 +8,7 @@
 </head>
 <body>
 <h1>Потребители</h1>
+
 <ul>
     <li th:each="user : ${users}">
         <span th:text="'ID: ' + ${user.id}"></span>,
@@ -16,7 +17,34 @@
         <span th:text="'Име: ' + ${user.name}"></span>,
         <span th:text="'Активен: ' + ${user.active}"></span>,
     </li>
-
 </ul>
+
+<table>
+    <thead >
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Име</th>
+        <th>Активен</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="user: ${users}">
+        <td th:text="${user.id}">id</td>
+        <td th:text="${user.username}">username</td>
+        <td th:text="${user.email}">email</td>
+        <td th:text="${user.name}">name</td>
+
+        <td th:text="${user.active}">active</td>
+        <td>
+            <a th:href="@{'/deleteUser/'+${user.id}}">Изтрии</a>
+            <a th:href="@{'/banUser/'+${user.id}}">Бан</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
 </body>
 </html>
