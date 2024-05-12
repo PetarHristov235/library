@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.db.entity.BookEntity;
 import com.example.demo.service.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,35 +13,42 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookController {
     private final BookService bookService;
+    private List<BookEntity> currentBooks;
 
     @GetMapping("/")
-    public ModelAndView index() {
-        ModelAndView modelAndView = new ModelAndView("index");
-        List<BookEntity> books = bookService.findAllBooks();
-        modelAndView.addObject("books", books);
-        return modelAndView;
+    public String index(Model model) {
+        if (currentBooks == null) {
+            currentBooks = bookService.findAllBooks();
+        }
+        model.addAttribute("books", currentBooks);
+        return "books";
     }
 
-    @GetMapping("/search")
-    public ModelAndView searchBooks(@RequestParam String filterType,
-                              @RequestParam String filterText) {
+    @GetMapping("/books/restart")
+    public String showBooksStart(Model model) {
+        model.addAttribute("books", bookService.findAllBooks());
+        return "books";
+    }
 
-        ModelAndView modelAndView = new ModelAndView("filteredBooks");
+    @GetMapping("/books/sort")
+    public String sortBooksList(@RequestParam String sortBy, Model model) {
+        if (currentBooks == null) {
+            currentBooks = bookService.findAllBooks();
+        }
+        currentBooks = bookService.sortBooks(currentBooks, sortBy);
+        model.addAttribute("books", currentBooks);
+        return "books";
+    }
 
-        //Search by filterText in the specific type
-        List<BookEntity> filtered = null;
-        if ("author".equals(filterType)) {
-            filtered = bookService.searchBooksByAuthor(filterText);
-        } else if ("genre".equals(filterType)) {
-            filtered = bookService.searchBooksByGenre(filterText);
-        } else if ("title".equals(filterType)) {
-            filtered = bookService.searchBooksByTitle(filterText);
+    @GetMapping("/books/filter")
+    public String filterBooksList(@RequestParam String filterBy,String filterText, Model model) {
+        if (currentBooks == null) {
+            currentBooks = bookService.findAllBooks();
         }
 
-
-        modelAndView.addObject("searchResults", filtered);
-
-        return modelAndView;
+        currentBooks = bookService.filterBooks(currentBooks, filterBy,filterText);
+        model.addAttribute("books", currentBooks);
+        return "books";
     }
 
     @GetMapping("/random")
