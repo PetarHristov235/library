@@ -21,13 +21,13 @@ public class BookController {
             currentBooks = bookService.findAllBooks();
         }
         model.addAttribute("books", currentBooks);
-        return "books";
+        return "index";
     }
 
     @GetMapping("/books/restart")
     public String showBooksStart(Model model) {
         model.addAttribute("books", bookService.findAllBooks());
-        return "books";
+        return "index";
     }
 
     @GetMapping("/books/sort")
@@ -37,7 +37,7 @@ public class BookController {
         }
         currentBooks = bookService.sortBooks(currentBooks, sortBy);
         model.addAttribute("books", currentBooks);
-        return "books";
+        return "index";
     }
 
     @GetMapping("/books/filter")
@@ -48,7 +48,7 @@ public class BookController {
 
         currentBooks = bookService.filterBooks(currentBooks, filterBy,filterText);
         model.addAttribute("books", currentBooks);
-        return "books";
+        return "index";
     }
 
     @GetMapping("/random")
