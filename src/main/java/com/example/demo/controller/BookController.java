@@ -1,15 +1,19 @@
 package com.example.demo.controller;
 
+
 import com.example.demo.db.entity.BookEntity;
 import com.example.demo.service.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.List;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class BookController {
     private final BookService bookService;
@@ -17,9 +21,7 @@ public class BookController {
 
     @GetMapping("/")
     public String index(Model model) {
-        if (currentBooks == null) {
-            currentBooks = bookService.findAllBooks();
-        }
+        currentBooks = bookService.findAllBooks();
         model.addAttribute("books", currentBooks);
         return "index";
     }
@@ -41,12 +43,12 @@ public class BookController {
     }
 
     @GetMapping("/books/filter")
-    public String filterBooksList(@RequestParam String filterBy,String filterText, Model model) {
+    public String filterBooksList(@RequestParam String filterBy, String filterText, Model model) {
         if (currentBooks == null) {
             currentBooks = bookService.findAllBooks();
         }
 
-        currentBooks = bookService.filterBooks(currentBooks, filterBy,filterText);
+        currentBooks = bookService.filterBooks(currentBooks, filterBy, filterText);
         model.addAttribute("books", currentBooks);
         return "index";
     }
@@ -75,7 +77,7 @@ public class BookController {
     }
 
     @GetMapping("/addBook")
-    public ModelAndView addBook(){
+    public ModelAndView addBook() {
         BookEntity book = new BookEntity();
         ModelAndView modelAndView = new ModelAndView("addBook");
         modelAndView.addObject("book", book);
@@ -83,9 +85,15 @@ public class BookController {
     }
 
     @PostMapping("/saveBook")
-    public String addBook(@ModelAttribute("book") BookEntity book) {
-
-        bookService.saveBook(book);
+    public String addBook(@ModelAttribute("book") BookEntity book, @RequestParam("image") MultipartFile image) {
+        try {
+                if (!image.isEmpty()) {
+                    book.setCover(image.getBytes());
+                }
+            bookService.saveBook(book);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return "redirect:/";
     }
 

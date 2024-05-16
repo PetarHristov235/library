@@ -5,8 +5,10 @@ import com.example.demo.db.repository.BookRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 @Service
@@ -17,7 +19,17 @@ public class BookServiceImpl implements  BookService {
 
     @Override
     public List<BookEntity> findAllBooks() {
-        return bookRepository.findAll();
+        List<BookEntity> bookEntityList = bookRepository.findAll();
+        for (BookEntity bookEntity : bookEntityList) {
+            try {
+                byte[] encodeBase64 = Base64.encodeBase64(bookEntity.getCover());
+                String base64Encoded = new String(encodeBase64, "UTF-8");
+                bookEntity.setCoverBase64encoded(base64Encoded);
+            } catch (UnsupportedEncodingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    return  bookEntityList;
     }
 
     @Override

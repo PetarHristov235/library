@@ -13,15 +13,14 @@
 </div>
 
 <div class="container">
-    <form method="post" role="form" th:action="@{/saveBook}" th:object="${book}">
-
+    <form method="post" role="form" th:action="@{/saveBook}" th:object="${book}" enctype="multipart/form-data">
         <div class="row">
             <div class="col-25">
                 <label>Корица</label>
             </div>
 <!--            <div class="col-75"><input id="cover" name="cover"  th:field="*{cover}" type="image"/></div>-->
             <div class="col-75">
-                <input id="cover" name="cover"   type="file" accept="image/*"/>
+                <input id="image" name="image"   type="file" accept="image/*"/>
             </div>
         </div>
 

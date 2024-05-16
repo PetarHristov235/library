@@ -38,6 +38,13 @@ public class BookEntity implements Persistable<Long> {
     @Column(name = "stock_count")
     Integer stockCount;
 
+    @Lob
+    @Column(name = "cover")
+    byte[] cover;
+
+    @Transient
+    String coverBase64encoded;
+
     @Override
     public boolean isNew() {
         return id == null;
