@@ -12,5 +12,4 @@ public interface BookService {
     void deleteBookById(Long id);
     List<BookEntity> filterBooks(List<BookEntity> booksList, String filterBy, String filterText);
     List<BookEntity> sortBooks(List<BookEntity> booksList, String sortBy);
-
 }

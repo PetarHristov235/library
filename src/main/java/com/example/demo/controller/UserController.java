@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @GetMapping(value="/banUser/{id}")
-    public String deleteUser(@PathVariable Long id) {
+    public String banUser(@PathVariable Long id) {
         userService.banUser(id);
         return "redirect:/users";
     }

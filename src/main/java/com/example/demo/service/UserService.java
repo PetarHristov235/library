@@ -7,4 +7,6 @@ import java.util.List;
 public interface UserService {
     UserEntity getUserByUsername(String username);
     List<UserEntity> findAllUsers();
+    void deleteUser(Long id);
+    void banUser(Long id);
 }
