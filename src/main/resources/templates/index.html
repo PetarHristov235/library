@@ -6,13 +6,12 @@
     <title>Начало</title>
 
     <base href="/">
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css">
     <link rel="stylesheet" type="text/css" href="/css/books.css">
     </base>
 </head>
 
 <body>
-
 
 <div class="topnav" id="myNav">
     <div>
@@ -70,16 +69,20 @@
     <button type="submit">Нека изберем за теб</button>
 </form>
 
-<div th:each="book : ${books}" class="book" th:onclick="'/books/' + ${book.id}">
-    <img th:src="'data:image/jpeg;base64,' + ${book.coverBase64encoded}" alt="Book cover" />
-    <h2 th:text="${book.title}"></h2>
-    <div class="book-info">
-        <p th:text="${book.bookName}"></p>
-        <p th:text="${book.author}"></p>
-        <p th:text="${book.genre}"></p>
+
+<div class="container">
+    <div th:each="book : ${books}" class="book">
+        <a th:href="@{/books/{id}(id=${book.id})}" class="book">
+            <img th:src="'data:image/jpeg;base64,' + ${book.coverBase64encoded}" alt="Book cover" />
+            <h2 th:text="${book.title}"></h2>
+            <div class="book-info">
+                <p th:text="${book.bookName}"></p>
+                <p th:text="${book.author}"></p>
+                <p th:text="${book.genre}"></p>
+            </div>
+        </a>
     </div>
 </div>
-
 </body>
 
 </html>

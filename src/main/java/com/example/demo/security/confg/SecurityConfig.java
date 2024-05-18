@@ -37,6 +37,7 @@ public class SecurityConfig {
                                         antMatcher("/register"),
                                         antMatcher("/registerProcessing"),
                                         antMatcher("/"),
+                                        antMatcher("bookDetails"),
                                         antMatcher("index"),
                                         antMatcher("/css/**"),
                                         //For testing
@@ -44,7 +45,8 @@ public class SecurityConfig {
                                         antMatcher("/listUsers"),
                                         antMatcher("/random"),
                                         antMatcher("/filteredBooks"),
-                                        antMatcher("/search")
+                                        antMatcher("/search"),
+                                        antMatcher("/books/*")
                                 )
                                 .permitAll()
 

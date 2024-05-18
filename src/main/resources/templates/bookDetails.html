@@ -1,26 +1,47 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmls:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Book Details</title>
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="/css/bookDetails.css">
 </head>
 <body>
-<h1>Данни за книга</h1>
 
-<div th:if="${book != null}">
-    <h2>Заглавие: <span th:text="${book.title}"></span></h2>
-    <img th:src="'data:image/jpeg;base64,' + ${book.coverBase64encoded}" alt="Book cover" />
-    <p>Автор: <span th:text="${book.author}"></span></p>
-    <p>Жанр: <span th:text="${book.genre}"></span></p>
-    <p>Резюме: <span th:text="${book.description}"></span></p>
+<div class="topnav" id="myNav">
+    <div>
+        <a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
+    </div>
+    <div class="topnav-centered">
+        <a th:href="@{/}"><h1>Име</h1></a>
+    </div>
+
+    <div class="topnav-right">
+        <a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
+        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Вход</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/profile}">Моят рофил</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Изход</a>
+    </div>
 </div>
 
 
-<!--
-<div th:if="${book == null}">
-    <p>Няма такава книга</p>
-</div>
--->
+<div class="container">
+    <h1>Данни за книга</h1>
 
+    <div th:if="${book != null}">
+        <h2>Заглавие: <span th:text="${book.title}"></span></h2>
+        <img th:src="'data:image/jpeg;base64,' + ${book.coverBase64encoded}" alt="Book cover" />
+        <p>Автор: <span th:text="${book.author}"></span></p>
+        <p>Жанр: <span th:text="${book.genre}"></span></p>
+        <p>Резюме: <span th:text="${book.bookDetails}"></span></p>
+    </div>
+
+
+
+    <div th:if="${book == null}" class="no-book">
+        <p>Няма такава книга</p>
+    </div>
+</div>
 </body>
 </html>

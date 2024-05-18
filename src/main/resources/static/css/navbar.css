@@ -1,25 +1,38 @@
 .topnav {
-    position: relative;
-    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     background-color: #000000;
-    color:#FFFFFF;
+    color: #FFFFFF;
     z-index: 1;
+    padding: 10px 0;
+    font-family: Arial, sans-serif;
 }
 
 .topnav a {
     float: left;
     text-align: center;
-    padding: 15px 15px;
+    padding: 15px 20px;
     text-decoration: none;
-    font-size: 17px;
-    color:#FFFFFF;
+    font-size: 18px;
+    color: #FFFFFF;
+    transition: background 0.3s, color 0.3s;
 }
+
 .topnav a:hover {
-    background:#FF0000;
+    background: #FF0000;
 }
+
+.topnav a.active {
+    background: #4CAF50;
+    color: white;
+}
+
 .topnav-right {
     float: right;
 }
+
 .topnav-centered a {
     float: none;
     position: absolute;
@@ -27,19 +40,18 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
 .topnav-centered a:hover {
     background-color: #00FF00;
-    color:#0000FF;
+    color: #0000FF;
 }
-.sticky {
-    position: fixed;
-    top: 0;
-    width: 100%;
-}
+
 @media screen and (max-width: 600px) {
     .topnav a, .topnav-right {
         float: none;
         display: block;
+        text-align: center;
+        padding: 10px;
     }
     .topnav-centered a {
         position: relative;

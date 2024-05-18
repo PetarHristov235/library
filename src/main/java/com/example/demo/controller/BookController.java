@@ -55,18 +55,17 @@ public class BookController {
 
     @GetMapping("/random")
     public ModelAndView randomBook() {
-
         BookEntity randomBook = bookService.getRandomBook();
 
         if (randomBook != null) {
-            return new ModelAndView("redirect:/bookDetails?id=" + randomBook.getId());
+            return new ModelAndView("redirect:/books/" + randomBook.getId());
         } else {
             return new ModelAndView("redirect:/");
         }
     }
 
     @GetMapping("/books/{id}")
-    public ModelAndView bookDetails(@PathVariable Long id) {
+    public ModelAndView bookDetails(@PathVariable("id") Long id) {
         BookEntity book = bookService.getBookById(id);
 
         ModelAndView modelAndView = new ModelAndView("bookDetails");
