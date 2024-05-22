@@ -30,7 +30,7 @@
     <h1>Данни за книга</h1>
 
     <div th:if="${book != null}">
-        <h2>Заглавие: <span th:text="${book.title}"></span></h2>
+        <h2><span th:text="${book.bookName}"></span></h2>
         <img th:src="'data:image/jpeg;base64,' + ${book.coverBase64encoded}" alt="Book cover" />
         <p>Автор: <span th:text="${book.author}"></span></p>
         <p>Жанр: <span th:text="${book.genre}"></span></p>

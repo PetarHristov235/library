@@ -58,7 +58,7 @@ public class BookServiceImpl implements  BookService {
         if (isValid(sortBy)) {
             switch (sortBy) {
                 case "title":
-                    booksList.sort(Comparator.comparing(BookEntity::getTitle));
+                    booksList.sort(Comparator.comparing(BookEntity::getBookName));
                     break;
                 case "author":
                     booksList.sort(Comparator.comparing(BookEntity::getAuthor));
@@ -102,7 +102,7 @@ public class BookServiceImpl implements  BookService {
     private List<BookEntity> filterByTitle(List<BookEntity> books, String title) {
         List<BookEntity> filteredBooks = new ArrayList<>();
         for (BookEntity book : books) {
-            if (matchesIgnoreCaseAndPartial(book.getTitle(), title)) {
+            if (matchesIgnoreCaseAndPartial(book.getBookName(), title)) {
                 filteredBooks.add(book);
             }
         }

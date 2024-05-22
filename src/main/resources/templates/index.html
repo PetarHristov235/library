@@ -10,15 +10,14 @@
     <link rel="stylesheet" type="text/css" href="/css/books.css">
     </base>
 </head>
-
 <body>
 
 <div class="topnav" id="myNav">
-    <div>
+    <div class="topnav-left">
     <a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
     </div>
-    <div class="topnav-centered">
-        <a th:href="@{/}"><h1>Име</h1></a>
+    <div class="topnav-center">
+        <a th:href="@{/}">Име</a>
     </div>
 
     <div class="topnav-right">
@@ -29,45 +28,34 @@
     </div>
 </div>
 
-
-<div class="center" >
-    <h1>Книги</h1>
-</div>
-
-<form action="/books/restart" method="get">
-    <button type="submit">Начало</button>
-</form>
-
-<form action="/books/sort" method="get">
-    <label for="sortBy">Сортирай по:</label>
-    <select name="sortBy" id="sortBy">
-        <option value="title">Заглавие</option>
-        <option value="author">Автор</option>
-        <option value="genre">Жанр</option>
-    </select>
-    <button type="submit">Сортирай</button>
-</form>
-
-<form action="/books/filter" method="get">
-    <label for="filterBy">Филтрирай по:</label>
-    <select id="filterBy" name="filterBy">
-        <option value="title">Заглавие</option>
-        <option value="author">Автор</option>
-        <option value="genre">Жанр</option>
-    </select>
-    <input type="text" id="filterText" name="filterText">
-    <button type="submit">Филтрирай</button>
-</form>
-
-
+<div class="container">
     <div class="center">
+
+        <div class="dropdown">
+            <button class="dropbtn">Сортирай</button>
+            <div class="dropdown-content">
+                <a th:href="@{/books/sort(sortBy='author')}">По автор</a>
+                <a th:href="@{/books/sort(sortBy='title')}">По заглавие</a>
+                <a th:href="@{/books/sort(sortBy='genre')}">По жанр</a>
+            </div>
+        </div>
+
+        <form action="/books/filter" method="get" class="filter-form">
+            <select id="filterBy" name="filterBy" class="dropbtn">
+                <option value="title">Заглавие</option>
+                <option value="author">Автор</option>
+                <option value="genre">Жанр</option>
+            </select>
+            <input type="text" id="filterText" name="filterText" placeholder="Текст">
+            <button type="submit" class="buttons">Филтрирай</button>
+        </form>
+
+
         <a class="buttons" sec:authorize="hasRole('ADMIN')" th:href="@{/addBook}">Добавяне</a>
+        <a class="buttons" sec:authorize="hasRole('USER')" th:href="@{/random}">Нека изберем за теб</a>
+
     </div>
-
-
-<form th:action="@{/random}" method="get">
-    <button type="submit">Нека изберем за теб</button>
-</form>
+</div>
 
 
 <div class="container">

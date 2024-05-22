@@ -26,11 +26,6 @@ public class BookController {
         return "index";
     }
 
-    @GetMapping("/books/restart")
-    public String showBooksStart(Model model) {
-        model.addAttribute("books", bookService.findAllBooks());
-        return "index";
-    }
 
     @GetMapping("/books/sort")
     public String sortBooksList(@RequestParam String sortBy, Model model) {
