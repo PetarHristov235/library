@@ -7,67 +7,48 @@
 </head>
 
 <body>
-
-<div class="center" >
-    <h1>Редактиране на книга</h1>
-</div>
-
 <div class="container">
-    <form method="post" role="form" th:action="@{/saveEdit}" th:object="${book}">
+    <h1>Редактиране на книга</h1>
 
-        <div class="row">
+    <div th:if="${book != null}">
+        <form th:action="@{/editBook}" method="post" enctype="multipart/form-data">
+            <input type="hidden" th:name="id" th:value="${book.id}" />
+
             <div>
-                <input  id="id" name="id" th:field="*{id}" type="hidden"/>
+                <label for="bookName">Име на книга:</label>
+                <input type="text" id="bookName" name="bookName" th:value="${book.bookName}" required />
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-25">
-                <label>Корица</label>
+            <div>
+                <label for="author">Автор:</label>
+                <input type="text" id="author" name="author" th:value="${book.author}" required />
             </div>
-            <!--            <div class="col-75"><input id="cover" name="cover"  th:field="*{cover}" type="image"/></div>-->
-            <div class="col-75">
-                <input id="cover" name="cover"   type="file" accept="image/*"/>
+
+            <div>
+                <label for="genre">Жанр:</label>
+                <input type="text" id="genre" name="genre" th:value="${book.genre}" required />
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-25"><label>Заглавие</label></div>
-            <div class="col-75">
-                <input id="bookName" name="title" placeholder="Въведи заглавие... " th:field="*{bookName}" type="text"/></div>
-            <p th:errors = "*{bookName}"  th:if="${#fields.hasErrors('bookName')}"></p>
-        </div>
-
-        <div class="row">
-            <div class="col-25"><label>Автор</label></div>
-            <div class="col-75"><input id="author" name="author" placeholder="Въведи автор..." th:field="*{author}" type="text"/></div>
-            <p th:errors = "*{author}"  th:if="${#fields.hasErrors('author')}"></p>
-        </div>
-
-        <div class="row">
-            <div class="col-25"><label>Жанр</label></div>
-            <div class="col-75"><input id="genre" name="genre" placeholder="Въведи жанр..." th:field="*{genre}" type="text"/></div>
-            <p th:errors = "*{genre}"  th:if="${#fields.hasErrors('genre')}"></p>
-        </div>
-
-        <div class="row">
-            <div class="col-25"><label>Резюме</label></div>
-            <div class="col-75"><input id="bookDetails" name="bookDetails" placeholder="Въведи резюме..." th:field="*{bookDetails}" type="text"/></div>
-            <p th:errors = "*{bookDetails}"  th:if="${#fields.hasErrors('bookDetails')}"></p>
-        </div>
-
-        <div class="row">
-            <div class="col-25"><label>Брой</label></div>
-            <div class="col-75"><input id="stockCount" name="stockCount" placeholder="Въведи количество..." th:field="*{stockCount}" type="text"/></div>
-            <p th:errors = "*{stockCount}"  th:if="${#fields.hasErrors('stockCount')}"></p>
-        </div>
-        <div class="row">
-            <div class="center">
-                <input type="submit" value="Запази">
+            <div>
+                <label for="bookDetails">Резюме:</label>
+                <textarea id="bookDetails" name="bookDetails" required th:text="${book.bookDetails}"></textarea>
             </div>
-        </div>
 
-    </form>
+            <div>
+                <label for="cover">Корица:</label>
+                <input type="file" id="cover" name="cover" />
+                <div>
+                    <img th:src="'data:image/jpeg;base64,' + ${book.coverBase64encoded}" alt="Book cover" />
+                </div>
+            </div>
+
+            <div>
+                <button type="submit">Запази</button>
+            </div>
+        </form>
+
+        <a th:href="@{'/deleteBook/'+${book.id}}">Delete</a>
+    </div>
 </div>
 </body>
 </html>

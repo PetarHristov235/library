@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Book Details</title>
-    <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <link rel="stylesheet" type="text/css" href="/css/bookDetails.css">
 </head>
 <body>
@@ -13,8 +13,8 @@
     <div>
         <a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
     </div>
-    <div class="topnav-centered">
-        <a th:href="@{/}"><h1>Име</h1></a>
+    <div class="topnav-center">
+        <a th:href="@{/}">Име</a>
     </div>
 
     <div class="topnav-right">
@@ -27,14 +27,14 @@
 
 
 <div class="container">
-    <h1>Данни за книга</h1>
-
     <div th:if="${book != null}">
         <h2><span th:text="${book.bookName}"></span></h2>
         <img th:src="'data:image/jpeg;base64,' + ${book.coverBase64encoded}" alt="Book cover" />
         <p>Автор: <span th:text="${book.author}"></span></p>
         <p>Жанр: <span th:text="${book.genre}"></span></p>
         <p>Резюме: <span th:text="${book.bookDetails}"></span></p>
+        <a class="buttons" th:href="@{'/orderBook/'+${book.id}}">Order</a>
+        <a class="buttons" th:href="@{'/editBook/'+${book.id}}">Edit</a>
     </div>
 
 
@@ -43,5 +43,7 @@
         <p>Няма такава книга</p>
     </div>
 </div>
+
+
 </body>
 </html>

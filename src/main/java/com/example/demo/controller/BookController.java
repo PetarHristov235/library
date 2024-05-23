@@ -92,7 +92,7 @@ public class BookController {
     }
 
     @GetMapping("/editBook/{id}")
-    public ModelAndView editBook(@PathVariable(value="id")int id) {
+    public ModelAndView editBookForm(@PathVariable(value="id")int id) {
         BookEntity book=bookService.findAllBooks().get(id);
 
         ModelAndView modelAndView = new ModelAndView("editBook");
@@ -100,12 +100,18 @@ public class BookController {
         return modelAndView;
     }
 
-    @PostMapping("/saveEdit")
-    public String saveBook(@ModelAttribute("book") BookEntity book) {
-
-        bookService.saveBook(book);
-
-        return "redirect:/";
+    @PostMapping("/editBook")
+    public String editBook(@ModelAttribute BookEntity book,
+                           @RequestParam("image") MultipartFile image) {
+        try {
+            if (!image.isEmpty()) {
+                book.setCover(image.getBytes());
+            }
+            bookService.saveBook(book);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return "redirect:/bookDetails/" + book.getId();
     }
 
     @GetMapping(value="/deleteBook/{id}")
