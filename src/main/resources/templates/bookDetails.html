@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <title>Book Details</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
-    <link rel="stylesheet" type="text/css" href="/css/bookDetails.css">
+
 </head>
+
 <body>
 
 <div class="topnav" id="myNav">
-    <div>
+    <div class="topnav-left">
         <a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
     </div>
     <div class="topnav-center">
@@ -20,21 +21,23 @@
     <div class="topnav-right">
         <a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
         <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Вход</a>
-        <a sec:authorize="isAuthenticated()" th:href="@{/profile}">Моят рофил</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/profile}">Моят профил</a>
         <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Изход</a>
     </div>
 </div>
+<br>
+<br>
+<br>
 
-
-<div class="container">
+<div class="container-books">
     <div th:if="${book != null}">
         <h2><span th:text="${book.bookName}"></span></h2>
         <img th:src="'data:image/jpeg;base64,' + ${book.coverBase64encoded}" alt="Book cover" />
         <p>Автор: <span th:text="${book.author}"></span></p>
         <p>Жанр: <span th:text="${book.genre}"></span></p>
         <p>Резюме: <span th:text="${book.bookDetails}"></span></p>
-        <a class="buttons" th:href="@{'/orderBook/'+${book.id}}">Order</a>
-        <a class="buttons" th:href="@{'/editBook/'+${book.id}}">Edit</a>
+        <a class="buttons" th:href="@{'/orderBook/'+${book.id}}">Поръчай</a>
+        <a class="buttons" th:href="@{'/editBook/'+${book.id}}">Редактирай</a>
     </div>
 
 

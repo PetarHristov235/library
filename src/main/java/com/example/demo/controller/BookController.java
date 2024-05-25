@@ -92,11 +92,10 @@ public class BookController {
     }
 
     @GetMapping("/editBook/{id}")
-    public ModelAndView editBookForm(@PathVariable(value="id")int id) {
-        BookEntity book=bookService.findAllBooks().get(id);
-
+    public ModelAndView editBookForm(@PathVariable(value = "id") long id) {
+        BookEntity book = bookService.getBookById(id);
         ModelAndView modelAndView = new ModelAndView("editBook");
-        modelAndView.addObject("book",book);
+        modelAndView.addObject("book", book);
         return modelAndView;
     }
 
@@ -104,14 +103,23 @@ public class BookController {
     public String editBook(@ModelAttribute BookEntity book,
                            @RequestParam("image") MultipartFile image) {
         try {
+            BookEntity existingBook = bookService.getBookById(book.getId());
             if (!image.isEmpty()) {
-                book.setCover(image.getBytes());
+                existingBook.setCover(image.getBytes());
             }
-            bookService.saveBook(book);
+
+            existingBook.setBookName(book.getBookName());
+            existingBook.setAuthor(book.getAuthor());
+            existingBook.setGenre(book.getGenre());
+            existingBook.setBookDetails(book.getBookDetails());
+            existingBook.setStockCount(book.getStockCount());
+
+            bookService.saveBook(existingBook);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return "redirect:/editBook/" + book.getId() + "?error";
         }
-        return "redirect:/bookDetails/" + book.getId();
+        return "redirect:/books/" + book.getId();
     }
 
     @GetMapping(value="/deleteBook/{id}")

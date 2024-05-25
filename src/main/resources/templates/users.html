@@ -1,32 +1,47 @@
-
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmls:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml"
+>
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Потребители</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+
 </head>
+
 <body>
-<h1>Потребители</h1>
 
-<ul>
-    <li th:each="user : ${users}">
-        <span th:text="'ID: ' + ${user.id}"></span>,
-        <span th:text="'Username: ' + ${user.username}"></span>,
-        <span th:text="'Email: ' + ${user.email}"></span>,
-        <span th:text="'Име: ' + ${user.name}"></span>,
-        <span th:text="'Активен: ' + ${user.active}"></span>,
-    </li>
-</ul>
+<div class="topnav" id="myNav">
 
-<table>
+    <div class="topnav-center">
+        <a th:href="@{/}">Име</a>
+    </div>
+
+    <div class="topnav-right">
+        <a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
+        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Вход</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/profile}">Моят профил</a>
+        <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Изход</a>
+    </div>
+</div>
+<br>
+<br>
+<br>
+
+<div class="center" >
+    <h1>Потребители</h1>
+</div>
+
+<table class="tables">
     <thead >
     <tr>
         <th>ID</th>
-        <th>Username</th>
-        <th>Email</th>
+        <th>Потребителско име</th>
+        <th>Имейл</th>
         <th>Име</th>
-        <th>Активен</th>
+        <th>Състояние</th>
+        <th>Действия</th>
     </tr>
     </thead>
 
@@ -36,10 +51,9 @@
         <td th:text="${user.username}">username</td>
         <td th:text="${user.email}">email</td>
         <td th:text="${user.name}">name</td>
-
         <td th:text="${user.active}">active</td>
         <td>
-            <a th:href="@{'/deleteUser/'+${user.id}}">Изтрии</a>
+            <a th:href="@{'/deleteUser/'+${user.id}}">Изтриване</a>
             <a th:href="@{'/banUser/'+${user.id}}">Бан</a>
         </td>
     </tr>
