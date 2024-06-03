@@ -30,7 +30,7 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
     void deleteBookByBookName(@Param("bookName") String bookName);
 
     @Query("""
-            DELETE FROM BookEntity b
+            SELECT b FROM BookEntity b
             WHERE b.author = :author""")
     List<BookEntity> searchBookByAuthor(@Param("author") String author);
 
