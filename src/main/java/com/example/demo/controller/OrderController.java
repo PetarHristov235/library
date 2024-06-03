@@ -70,7 +70,6 @@ public class OrderController {
                 book.getBookName(),
                 receiver.getUsername()
         );
-
         orderService.saveOrder(newOrder);
 
         mailSenderService.sendEmail(
@@ -82,6 +81,8 @@ public class OrderController {
                 String.valueOf(newOrder.getDate()),
                 String.valueOf(newOrder.getId())
         );
+
+        bookService.decreaseBookStockCount(book);
 
         return new ModelAndView("redirect:/");
     }

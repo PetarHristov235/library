@@ -72,6 +72,11 @@ public class BookServiceImpl implements  BookService {
     }
 
     @Override
+    public void decreaseBookStockCount(BookEntity book) {
+        book.setStockCount(book.getStockCount()-1);
+    }
+
+    @Override
     public List<BookEntity> filterBooks(List<BookEntity> booksList, String filterBy, String filterText) {
         if (isValid(filterBy) && isValid(filterText)) {
             switch (filterBy) {
