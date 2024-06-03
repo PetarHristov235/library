@@ -10,6 +10,5 @@ public interface OrderService {
         void deleteOrderById(Long id);
         OrderEntity findOrderById(Long id);
         List<OrderEntity> findAllOrders();
-
-
+        List<OrderEntity> getOrdersByUsername(String username);
 }

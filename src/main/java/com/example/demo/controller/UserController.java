@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.db.entity.OrderEntity;
 import com.example.demo.db.entity.UserEntity;
+import com.example.demo.service.OrderService;
 import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -17,6 +19,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final OrderService orderService;
 
     @GetMapping("/listUsers")
     public ModelAndView listUsers() {
@@ -32,9 +35,12 @@ public class UserController {
         String username = authentication.getName();
 
         UserEntity currentUser = userService.getUserByUsername(username);
+        List<OrderEntity> userOrders = orderService.getOrdersByUsername(username);
 
         ModelAndView modelAndView = new ModelAndView("profile");
         modelAndView.addObject("userProfile", currentUser);
+        modelAndView.addObject("userOrders", userOrders);
+
         return modelAndView;
     }
 

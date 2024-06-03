@@ -36,4 +36,9 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAll();
     }
 
+    @Override
+    public List<OrderEntity> getOrdersByUsername(String username) {
+        return orderRepository.findByUsername(username);
+    }
+
 }
