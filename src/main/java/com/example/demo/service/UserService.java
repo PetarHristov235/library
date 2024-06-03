@@ -10,4 +10,7 @@ public interface UserService {
     void deleteUser(Long id);
     void banUser(Long id);
     void activateUser(Long id);
+    boolean existsUsername(String username);
+    boolean existsUserEmail(String email);
+
 }

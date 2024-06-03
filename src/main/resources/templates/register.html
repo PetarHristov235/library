@@ -29,27 +29,31 @@
 
 <div class="container">
 
-        <form th:action="@{/registerProcessing}" method="post">
+        <form th:action="@{/registerProcessing}" th:object="${user}" method="post">
 
             <div class="row">
                 <div class="col-25"><label >Име</label></div>
                 <div class="col-75"><input type="text"  id="name" name="name" required></div>
             </div>
+            <p th:errors = "*{name}" class="error-message " th:if="${#fields.hasErrors('name')}"></p>
 
             <div class="row">
                 <div class="col-25"><label >Имейл</label></div>
                 <div class="col-75"><input type="email" id="email" name="email" required></div>
             </div>
+            <p th:errors = "*{email}" class="error-message " th:if="${#fields.hasErrors('email')}"></p>
 
             <div class="row">
                 <div class="col-25"><label >Потребителско име</label></div>
                 <div class="col-75"><input type="text" id="username" name="username" required></div>
             </div>
+            <p th:errors = "*{username}" class="error-message " th:if="${#fields.hasErrors('username')}"></p>
 
             <div class="row">
                 <div class="col-25"><label >Парола</label></div>
                 <div class="col-75"><input type="password" id="password" name="password" required></div>
             </div>
+            <p th:errors = "*{password}" class="error-message " th:if="${#fields.hasErrors('password')}"></p>
 
             <div class="row">
                 <div class="center">

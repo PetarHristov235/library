@@ -40,4 +40,14 @@ public class UserServiceImpl implements UserService {
     public void activateUser(Long id) {
         userRepository.findById(id).ifPresent(user -> user.setActive(true));
     }
+
+    @Override
+    public boolean existsUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    @Override
+    public boolean existsUserEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
 }
