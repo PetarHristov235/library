@@ -36,7 +36,7 @@
         <p>Автор: <span th:text="${book.author}"></span></p>
         <p>Жанр: <span th:text="${book.genre}"></span></p>
         <p>Резюме: <span th:text="${book.bookDetails}"></span></p>
-        <a class="buttons" th:href="@{'/orderBook/'+${book.id}}">Поръчай</a>
+        <a class="buttons" th:if="${book.stockCount >= 1}" th:href="@{'/orderBook/'+${book.id}}">Поръчай</a>
         <a class="buttons" th:href="@{'/editBook/'+${book.id}}">Редактирай</a>
     </div>
 

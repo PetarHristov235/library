@@ -59,12 +59,14 @@
     </div>
 
 <div class="container-books">
-
     <div th:each="book : ${books}">
         <a th:href="@{/books/{id}(id=${book.id})}">
-        <div class="book">
-            <img th:src="'data:image/jpeg;base64,' + ${book.coverBase64encoded}" alt="Book cover"/>
-            <h2 th:text="${book.title}"></h2>
+            <div class="book">
+                <div class="image-container">
+                    <div th:if="${book.stockCount == 0}" class="coming-soon">Очаквайте скоро</div>
+                    <img th:src="'data:image/jpeg;base64,' + ${book.coverBase64encoded}" alt="Book cover"/>
+                </div>
+                <h2 th:text="${book.title}"></h2>
             <div class="book-info">
                 <p th:text="${book.bookName}"></p>
                 <p th:text="${book.author}"></p>
@@ -73,8 +75,8 @@
         </div>
         </a>
     </div>
-
 </div>
+
 </body>
 
 </html>

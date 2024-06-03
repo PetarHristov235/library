@@ -15,6 +15,12 @@ body {
     padding-top: 50px;
 }
 
+.image-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
 .container {
     margin:auto;
     width: 50%;
@@ -82,8 +88,27 @@ img {
     transition: background-color 0.3s ease;
     text-decoration: none;
     color : #000000;
+    position: relative;
+}
+.book img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
 }
 
+.coming-soon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    border-radius: 5px;
+    text-align: center;
+    pointer-events: none;
+}
 .book p, a{
     text-decoration: none;
     color : #000000;
