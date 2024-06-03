@@ -34,4 +34,10 @@ public class UserServiceImpl implements UserService {
     public void banUser(Long id) {
         userRepository.findById(id).ifPresent(user -> user.setActive(false));
     }
+
+    @Override
+    @Transactional
+    public void activateUser(Long id) {
+        userRepository.findById(id).ifPresent(user -> user.setActive(true));
+    }
 }

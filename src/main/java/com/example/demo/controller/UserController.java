@@ -45,14 +45,19 @@ public class UserController {
     }
 
     @GetMapping(value="/deleteUser/{id}")
-    public String deleteUser(@PathVariable Long id) {
+    public ModelAndView deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return "redirect:/users";
+        return new ModelAndView("redirect:/listUsers");
     }
 
     @GetMapping(value="/banUser/{id}")
-    public String banUser(@PathVariable Long id) {
+    public ModelAndView banUser(@PathVariable Long id) {
         userService.banUser(id);
-        return "redirect:/users";
+        return new ModelAndView("redirect:/listUsers");
+    }
+    @GetMapping(value="/activateUser/{id}")
+    public ModelAndView activateUser(@PathVariable Long id) {
+        userService.activateUser(id);
+        return new ModelAndView("redirect:/listUsers");
     }
 }

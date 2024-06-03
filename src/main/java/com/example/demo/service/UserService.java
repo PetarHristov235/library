@@ -9,4 +9,5 @@ public interface UserService {
     List<UserEntity> findAllUsers();
     void deleteUser(Long id);
     void banUser(Long id);
+    void activateUser(Long id);
 }
