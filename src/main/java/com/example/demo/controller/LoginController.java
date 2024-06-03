@@ -6,9 +6,16 @@ import com.example.demo.db.repository.UserRepository;
 import com.example.demo.service.UserService;
 import com.example.demo.util.DataValidation;
 import com.example.demo.util.EmailService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,10 +37,25 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value = "/login")
+    @GetMapping("/login")
     public String login(Model model) {
         return "login";
     }
+
+    @PostMapping("/loginProcessing")
+    public String loginProcessing(@RequestParam("username") String username,
+                                  @RequestParam("password") String password,
+                                  Model model) {
+
+        if(userRepository.existByUsernameAndPassword(username, passwordEncoder.encode(password))){
+            return "redirect:/";
+
+        }else{
+            return "redirect:/login";
+        }
+
+    }
+
 
     @GetMapping("/register")
     public ModelAndView register(Model model) {
@@ -41,8 +63,6 @@ public class LoginController {
                 "user",
                 new UserEntity());
     }
-
-
 
     @PostMapping("/registerProcessing")
     public ModelAndView registerProcessing(@ModelAttribute("user") UserEntity user, BindingResult result) {
@@ -61,29 +81,6 @@ public class LoginController {
         emailService.registrationConfirmationEmail(user.getEmail(), user.getName());
 
         return new ModelAndView("redirect:/login");
-    }
-
-    @PostMapping("/loginProcessing")
-    public String loginProcessing(@RequestParam("username") String username,
-                                  @RequestParam("password") String password,
-                                  RedirectAttributes redirectAttributes) {
-        boolean authenticationSuccessful = userRepository.existByUsernameAndPassword(username, passwordEncoder.encode(password));
-
-        if (authenticationSuccessful) {
-            return "redirect:/";
-        } else {
-            UserEntity user = userRepository.findByUsername(username);
-            if (user == null) {
-                redirectAttributes.addFlashAttribute("errorMessage", "Невалидно потребителско име!");
-            } else if (!passwordEncoder.matches(password, user.getPassword())) {
-                redirectAttributes.addFlashAttribute("errorMessage", "Невалидна парола!");
-            } else if (!user.isActive()) {
-                redirectAttributes.addFlashAttribute("errorMessage", "Акаунтът не е активен!");
-            } else {
-                redirectAttributes.addFlashAttribute("errorMessage", "Грешка при влизане!");
-            }
-            return "/login";
-        }
     }
 
     private void validateData(UserEntity user, BindingResult result){

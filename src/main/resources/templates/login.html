@@ -1,12 +1,10 @@
 <!DOCTYPE html>
-<html xmls:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
-      xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" lang="">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Вход</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
 </head>
-
 <body>
 <div class="topnav" id="myNav">
     <div class="topnav-center">
@@ -20,41 +18,36 @@
 <br>
 <br>
 
-<div class="center" >
+<div class="center">
     <h1>Влизане</h1>
 </div>
 
 <div class="container">
-
     <form th:action="@{/loginProcessing}" method="post">
         <div class="row">
-            <div class="col-25"><label >Потребителско име</label></div>
+            <div class="col-25"><label>Потребителско име</label></div>
             <div class="col-75"><label for="username"></label><input type="text" id="username" name="username" required></div>
         </div>
-
         <div class="row">
-            <div class="col-25"><label >Парола</label></div>
+            <div class="col-25"><label>Парола</label></div>
             <div class="col-75"><label for="password"></label><input type="password" id="password" name="password" required></div>
         </div>
-
         <div class="row">
             <div class="center">
                 <input type="submit" class="buttons" value="Влез">
             </div>
         </div>
         <div class="row">
-            <div th:if="${errorMessage}" class="error-message">
-                <p th:text="${errorMessage}"></p>
-            </div>
-        </div>
-        <div class="row">
             <div class="center"><span>Още не си регистриран?</span></div>
         </div>
         <div class="row">
-            <div class="center"> <a class="buttons" th:href="@{/register}">Регистрирай се!</a></div>
+            <div class="center"><a class="buttons" th:href="@{/register}">Регистрирай се!</a></div>
+        </div>
+        <div class="row">
+            <div th:if="${param.error != null}" class="error-message">
+                <p>Неуспешно влизане!</p>
         </div>
     </form>
 </div>
-
 </body>
 </html>
