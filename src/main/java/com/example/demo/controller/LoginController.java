@@ -3,7 +3,9 @@ package com.example.demo.controller;
 import com.example.demo.db.entity.UserEntity;
 import com.example.demo.db.entity.enums.Role;
 import com.example.demo.db.repository.UserRepository;
+import com.example.demo.util.EmailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginController {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping(value = "/login")
     public String login() {
@@ -45,7 +49,9 @@ public class LoginController {
 
         userRepository.save(user);
 
-        return "redirect:/login"; // Redirect to login page after successful registration
+        emailService.registrationConfirmationEmail(email,name);
+
+        return "redirect:/login";
     }
 
     @PostMapping("/loginProcessing")

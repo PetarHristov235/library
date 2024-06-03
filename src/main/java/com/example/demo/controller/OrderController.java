@@ -33,7 +33,7 @@ public class OrderController {
     @Autowired
     private UserService userService;
     @Autowired
-    private EmailService mailSenderService;
+    private EmailService emailService;
 
     @GetMapping(value = "/orderBook/{id}")
     public ModelAndView order(@PathVariable Long id){
@@ -72,7 +72,7 @@ public class OrderController {
         );
         orderService.saveOrder(newOrder);
 
-        mailSenderService.sendEmail(
+        emailService.orderConfirmationEmail(
                 receiver.getEmail(),
                 receiver.getName(),
                 book.getBookName(),
@@ -98,6 +98,18 @@ public class OrderController {
     public ModelAndView deleteOrder(@PathVariable Long id){
 
         orderService.deleteOrderById(id);
+
+        return new ModelAndView("redirect:/listOrders");
+    }
+
+    @GetMapping("/remind/{id}")
+    public ModelAndView remindDeadline(@PathVariable Long id){
+        OrderEntity order=orderService.findOrderById(id);
+        UserEntity user = userService.getUserByUsername(order.getUsername());
+
+        emailService.orderDeadlineOverdueEmail(user.getEmail(),
+                                                user.getName(),
+                                                order.getTitle());
 
         return new ModelAndView("redirect:/listOrders");
     }

@@ -10,17 +10,17 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public void sendEmail(String receiver,
-                          String receiverName,
-                          String title,
-                          String address,
-                          String phoneNumber,
-                          String date,
-                          String orderNumber){
+    public void orderConfirmationEmail(String receiverEmail,
+                                       String receiverName,
+                                       String title,
+                                       String address,
+                                       String phoneNumber,
+                                       String date,
+                                       String orderNumber){
         SimpleMailMessage message=new SimpleMailMessage();
 
         message.setFrom("blogemailservice512@gmail.com");
-        message.setTo(receiver);
+        message.setTo(receiverEmail);
         message.setText("Скъпи "+receiverName+",\n" +
                 "\n" +
                 "Радваме се да ви информираме, че вашата поръчка от нашата библиотека беше успешно обработена и потвърдена.\n" +
@@ -42,4 +42,45 @@ public class EmailService {
         mailSender.send(message);
     }
 
+
+
+    public void registrationConfirmationEmail(String receiverEmail,
+                                          String receiverName
+                                      ) {
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setFrom("blogemailservice512@gmail.com");
+        message.setTo(receiverEmail);
+        message.setText("Скъпи " + receiverName + ",\n" +
+                "\n" +
+                "Радваме се да ви информираме, че вашата регистрация е направена успешно.\n" +
+                "\n" +
+                "С удолволстие ще Ви помогнем да се потопите в магическия свят на книгите!\n"
+        );
+        message.setSubject("Успешна регистрация");
+
+        mailSender.send(message);
+    }
+
+    public void orderDeadlineOverdueEmail(String receiverEmail,
+                                                 String receiverName,
+                                                 String book
+    ) {
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setFrom("blogemailservice512@gmail.com");
+        message.setTo(receiverEmail);
+        message.setText("Скъпи " + receiverName + ",\n" +
+                "\n" +
+                "Искаме да ви уведомим, че срокъд за връщане на книгата "+ book +" е изтекъл.\n" +
+                "\n" +
+                "В знак на добра воля ще удължим срока с още 1 седмица! \n" +
+                "\n" +
+                "Приятно четене! \n"
+
+        );
+        message.setSubject("Просрочен срок за връщане");
+
+        mailSender.send(message);
+    }
 }

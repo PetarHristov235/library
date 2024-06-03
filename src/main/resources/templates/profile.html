@@ -29,21 +29,32 @@
 <br>
 <br>
 <br>
-
 <div class="container">
     <h1>Моят Профил</h1>
-    <div >
+    <div>
         <label>Потребителско име:</label>
         <span th:text="${userProfile.username}"></span>
     </div>
-    <div >
+    <div>
         <label>Имейл:</label>
         <span th:text="${userProfile.email}"></span>
     </div>
-    <div >
-        <label>Взети книги:</label>
+    <div>
+        <table class="tables">
+            <thead >
+            <tr>
+                <th>Книги</th>
+            </tr>
+            </thead >
 
+            <tbody>
+            <tr th:each="order : ${userOrders}">
+                <td th:text="${order.title}">book</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
+
 </body>
 </html>
