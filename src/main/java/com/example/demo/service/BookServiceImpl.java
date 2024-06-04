@@ -29,8 +29,12 @@ public class BookServiceImpl implements  BookService {
         }
         Random random = new Random();
         int randomIndex = random.nextInt(booksList.size());
-        BookEntity bookFromRandomChoose = booksList.get(randomIndex);
-        return bookFromRandomChoose;
+        BookEntity randomBook = booksList.get(randomIndex);
+
+        if(randomBook.getStockCount()==0) {
+            getRandomBook();
+        }
+        return randomBook;
     }
 
     @Override
