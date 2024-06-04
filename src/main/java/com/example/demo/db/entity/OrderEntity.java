@@ -20,22 +20,22 @@ public class OrderEntity implements Persistable<Long> {
     @Id
     @SequenceGenerator(name="orderSequence", initialValue=100000,allocationSize = 1)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="orderSequence")
-    Long id;
+    private Long id;
 
     @Column(name = "username")
-    String username;
+    private String username;
 
     @Column(name = "title")
-    String title;
+    private String title;
 
     @Column (name = "date")
-    LocalDate date;
+    private LocalDate date;
 
     @Column(name = "address")
-    String address;
+    private String address;
 
     @Column(name = "phone_number")
-    String phoneNumber;
+    private String phoneNumber;
 
     public OrderEntity(String address, LocalDate date, String phoneNumber, String title, String username) {
         this.address = address;

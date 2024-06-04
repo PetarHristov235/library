@@ -24,36 +24,36 @@ public class BookEntity implements Persistable<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookIdSeqGenerator")
     @SequenceGenerator(name = "bookIdSeqGenerator", sequenceName = "book_id_seq", allocationSize = 1)
-    Long id;
+    private Long id;
 
     @Column(name = "book_name")
-    String bookName;
+    private String bookName;
 
     @Column(name = "author")
-    String author;
+    private String author;
 
     @Column (name = "genre")
-    String genre;
+    private String genre;
 
     @Column(name = "book_details")
-    String bookDetails;
+    private String bookDetails;
 
     @Column(name = "stock_count")
-    Integer stockCount;
+    private Integer stockCount;
 
     @Lob
     @Column(name = "cover")
-    byte[] cover;
+    private byte[] cover;
 
     @OneToMany
     @JoinColumn(name = "book_id")
-    List<RateEntity> rateEntity;
+    private List<RateEntity> rateEntity;
 
     @Transient
-    String coverBase64encoded;
+    private String coverBase64encoded;
 
     @Transient
-    BigDecimal avgRate;
+    private BigDecimal avgRate;
 
     @Override
     public boolean isNew() {
