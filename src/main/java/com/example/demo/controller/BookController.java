@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.db.entity.BookEntity;
+import com.example.demo.db.repository.BookRepository;
 import com.example.demo.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookController {
     private final BookService bookService;
+    private final BookRepository bookRepository;
     private List<BookEntity> currentBooks;
 
     @GetMapping("/")
@@ -67,6 +69,15 @@ public class BookController {
 
         modelAndView.addObject("book", book);
 
+        return modelAndView;
+    }
+
+    @GetMapping("/bookStock")
+    public ModelAndView listOrders(Model model) {
+        ModelAndView modelAndView = new ModelAndView("booksStock");
+
+        List<BookEntity> allBooks = bookRepository.findAll();
+        modelAndView.addObject("books", allBooks);
         return modelAndView;
     }
 
