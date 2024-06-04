@@ -66,11 +66,14 @@
                     <div th:if="${book.stockCount == 0}" class="coming-soon">Очаквайте скоро</div>
                     <img th:src="'data:image/jpeg;base64,' + ${book.coverBase64encoded}" alt="Book cover"/>
                 </div>
-                <h2 th:text="${book.title}"></h2>
+<!--                This should not work as title is always null-->
+<!--                <h2 th:text="${book.title}"></h2>-->
             <div class="book-info">
                 <p th:text="${book.bookName}"></p>
                 <p th:text="${book.author}"></p>
                 <p th:text="${book.genre}"></p>
+<!--                could not display it, sorry :D -->
+                <p th:text="${#numbers.formatDecimal(book.avgRate, 1, 'COMMA', 2, 'POINT')}"></p>
             </div>
         </div>
         </a>
