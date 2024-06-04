@@ -2,8 +2,11 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     margin: 0;
-
     box-sizing: border-box;
+    background-image: url('img/cover.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 .container-books {
