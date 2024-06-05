@@ -57,6 +57,7 @@
                 <div class="col-25"><label >Парола</label></div>
                 <div class="col-75"><input type="password" id="password" name="password" required></div>
             </div>
+            <p th:errors = "*{password}" class="error-message " th:if="${#fields.hasErrors('password')}"></p>
 
             <div class="row">
                 <div class="center">

@@ -311,11 +311,15 @@ input[type="text"], input[type="email"], input[type="password"], input[type="fil
 }
 
 .tables tr:nth-child(even){
-    background-color:#f2f2f2 ;
+    background-color:#dcdcdc ;
+}
+
+.tables tr:nth-child(odd){
+    background-color:#989898 ;
 }
 
 .tables tr:hover {
-    background-color:#dddddd;
+    background-color:#bdbdbd;
 }
 
 .tables th {
