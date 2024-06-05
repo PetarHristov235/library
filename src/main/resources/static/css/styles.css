@@ -26,13 +26,24 @@ html, body {
 
 .container {
     margin:auto;
-    width: 50%;
+    width: 33%;
     border-radius: 5px;
     background-color: #f2f2f2;
     color:#282828;
     padding: 20px;
 }
 
+.wrapper{
+    margin:auto;
+    width: 33%;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    color:#282828;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .center {
     text-align: center;
     width: 100%;
@@ -84,7 +95,18 @@ img {
 }
 
 .book {
-    background-color: #f9f9f9;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+    color : #000000;
+    position: relative;
+}
+
+.book-details {
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 10px;
     padding: 20px;
     box-sizing: border-box;
@@ -225,6 +247,17 @@ img {
     font-size: 16px;
 }
 
+.rate-form{
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    justify-content: center;
+    align-items: center;
+}
+
+
 /* Input */
 input[type="text"], input[type="email"], input[type="password"], input[type="file"]{
     padding: 10px;
@@ -248,6 +281,14 @@ input[type="text"], input[type="email"], input[type="password"], input[type="fil
     border-radius: 5px;
 }
 
+.rating-group {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+.rating-group label {
+    margin-left: 10px;
+}
 
 .filter-form .buttons:hover {
     background-color:  #005f6b;
@@ -341,3 +382,19 @@ input[type="text"], input[type="email"], input[type="password"], input[type="fil
     }
 }
 
+.rating-group {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+.rating-group label {
+    margin-left: 10px;
+}
+textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    resize: vertical;
+}

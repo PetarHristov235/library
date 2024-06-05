@@ -22,11 +22,11 @@ public class DataValidation {
         return !matcher.matches();
     }
 
-    public static boolean isValidName(String firstName) {
+    public static boolean isValidName(String name) {
         String regex = "^[A-Z][a-z]{0,29}$";
 
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(firstName);
+        Matcher matcher = pattern.matcher(name);
 
         return !matcher.matches();
     }

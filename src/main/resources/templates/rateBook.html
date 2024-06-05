@@ -1,89 +1,37 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Rate Book</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<h1>Rate Book</h1>-->
-<!--<form action="#" method="post">-->
-<!--    <label for="rating">Rating:</label><br>-->
-<!--    <input type="radio" id="1" name="rating" value="1">-->
-<!--    <label for="2">2</label><br>-->
-<!--    <input type="radio" id="3" name="rating" value="3">-->
-<!--    <label for="3">3</label><br>-->
-<!--    <input type="radio" id="4" name="rating" value="4">-->
-<!--    <label for="4">4</label><br>-->
-<!--    <input type="radio" id="5" name="rating" value="5">-->
-<!--    <label for="5">5</label><br>-->
-<!--    <label for="comment">Comment:</label><br>-->
-<!--    <textarea id="comment" name="comment" rows="4" cols="50"></textarea><br>-->
-<!--    <input type="submit" value="Submit">-->
-<!--</form>-->
-<!--</body>-->
-<!--</html>-->
-
 <!DOCTYPE html>
-<html lang="en">
+<html xmls:th="http://www.thymeleaf.org" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:xmls="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" lang="bg">
 <head>
     <meta charset="UTF-8">
-    <title>Оцени Книга</title>
+    <title>Начало</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 500px; /* Increased width */
-        }
-        .rating-group {
-            display: flex;
-            align-items: center;
-            margin-top: 10px;
-        }
-        .rating-group label {
-            margin-left: 10px;
-        }
-        textarea {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            resize: vertical;
-        }
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 20px;
-            width: 100%;
-        }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-    </style>
+</head>
+
 <body>
-<form action="/saveRating" method="post" th:object="${rateEntity}">
-    <label>Оценка:</label><br>
+<<div class="topnav" id="myNav">
+<div class="topnav-left">
+<a sec:authorize="hasRole('ADMIN')" th:href="@{/listUsers}">Потребители</a>
+<a sec:authorize="hasRole('ADMIN')" th:href="@{/listOrders}">Поръчки</a>
+<a sec:authorize="hasRole('ADMIN')" th:href="@{/bookStock}">Наличности</a>
+</div>
+<div class="topnav-center">
+<a th:href="@{/}">Книгомания</a>
+</div>
+
+<div class="topnav-right">
+<a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
+<a sec:authorize="isAuthenticated()" th:href="@{/profile}">Моят профил</a>
+<a sec:authorize="isAuthenticated()" th:href="@{/logout}">Изход</a>
+</div>
+</div>
+<br>
+<br>
+<br>
+
+
+<div class="wrapper">
+<form action="/saveRating" method="post" th:object="${rateEntity}" class="form">
+    <label><h2>Оценка:</h2></label><br>
     <div class="rating-group">
         <input type="radio" id="1" name="rating" value="1" th:field="*{rate}"><label for="1">1</label>
     </div>
@@ -100,10 +48,12 @@
         <input type="radio" id="5" name="rating" value="5" th:field="*{rate}"><label for="5">5</label>
     </div>
     <p th:if="${error}" th:text="${error}" class="error"></p>
-    <label for="comment">Коментар:</label><br>
+    <label for="comment"><h2>Коментар:</h2></label><br>
     <textarea id="comment" name="comment" rows="4" cols="50" th:field="*{comment}"></textarea><br>
     <input type="hidden" id="bookId" name="bookId" value="${bookId}" th:field="*{bookId}">
-    <input type="submit" value="ОЦЕНИ">
+    <input type="submit" class="buttons" value="ОЦЕНИ">
 </form>
+</div>
+
 </body>
 </html>
