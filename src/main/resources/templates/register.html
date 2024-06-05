@@ -6,8 +6,8 @@
     <meta charset="UTF-8">
     <title>Регистрация</title>
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
-
 </head>
+
 <body>
 
 <div class="topnav" id="myNav">
@@ -21,13 +21,12 @@
     </div>
 
     <div class="topnav-right">
+        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Вход</a>
         <a sec:authorize="isAuthenticated()" th:href="@{/profile}">Моят профил</a>
         <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Изход</a>
     </div>
 </div>
-<br>
-<br>
-<br>
+<br><br><br>
 
 <div class="center" >
     <h1>Регистрация</h1>
