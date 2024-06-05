@@ -12,5 +12,5 @@ public interface RateRepository extends JpaRepository<RateEntity,Long> {
     @Query("""
             SELECT rate FROM RateEntity rate where rate.bookId = :bookId
             """)
-    List<RateEntity> findRateByBookId(@Param("bookId") Long bookId);
+    List<RateEntity> findRatesByBookId(@Param("bookId") Long bookId);
 }

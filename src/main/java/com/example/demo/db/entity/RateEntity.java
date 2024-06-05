@@ -24,7 +24,7 @@ public class RateEntity implements Persistable<Long> {
     @Column(name = "rate_stars")
     private Short rate;
 
-    @Column(name = "comment")
+    @Column(name = "comment",length = 3000)
     private String comment;
 
     @Column(name = "book_id")

@@ -76,7 +76,7 @@ public class BookController {
     public ModelAndView listOrders(Model model) {
         ModelAndView modelAndView = new ModelAndView("booksStock");
 
-        List<BookEntity> allBooks = bookRepository.findAll();
+        List<BookEntity> allBooks = bookService.findAllBooks();
         modelAndView.addObject("books", allBooks);
         return modelAndView;
     }

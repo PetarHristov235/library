@@ -35,7 +35,7 @@ public class BookEntity implements Persistable<Long> {
     @Column (name = "genre")
     private String genre;
 
-    @Column(name = "book_details")
+    @Column(name = "book_details", length = 3000)
     private String bookDetails;
 
     @Column(name = "stock_count")

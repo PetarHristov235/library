@@ -39,6 +39,8 @@
         <p>Средна оценка: <span th:text="${#numbers.formatDecimal(book.avgRate, 1, 'COMMA', 2, 'POINT')}"></span></p>
         <a class="buttons" th:if="${book.stockCount >= 1}" th:href="@{'/orderBook/'+${book.id}}">Поръчай</a>
         <a class="buttons" th:href="@{'/editBook/'+${book.id}}">Редактирай</a>
+        <a class="buttons" th:href="@{'/rateBook/'+${book.id}}">Оцени</a>
+        <a class="buttons" th:href="@{'/showRates/'+${book.id}}">Покажи оценките</a>
     </div>
 
 
