@@ -36,17 +36,14 @@ public class EmailService {
                 "Моля, прегледайте горепосочените детайли и ни уведомете, ако имате въпроси или притеснения. Ако трябва да направите някакви промени в поръчката си, моля, свържете се с нас възможно най-скоро.\n" +
                 "\n" +
                 "Благодарим ви още веднъж, че избрахте нашата библиотека, за да изберете вашата книга. Приятно четене и очакваме с нетърпение следващата ни среща!\n" );
-        message.setSubject("Михбук потвърждаване на поръчка - "+orderNumber);
-
-
+        message.setSubject("Книгомания потвърждаване на поръчка - "+orderNumber);
         mailSender.send(message);
     }
 
 
 
     public void registrationConfirmationEmail(String receiverEmail,
-                                          String receiverName
-                                      ) {
+                                          String receiverName) {
         SimpleMailMessage message = new SimpleMailMessage();
 
         message.setFrom("blogemailservice512@gmail.com");
@@ -57,15 +54,13 @@ public class EmailService {
                 "\n" +
                 "С удолволстие ще Ви помогнем да се потопите в магическия свят на книгите!\n"
         );
-        message.setSubject("Успешна регистрация");
-
+        message.setSubject("Книгомания - Успешна регистрация");
         mailSender.send(message);
     }
 
     public void orderDeadlineOverdueEmail(String receiverEmail,
                                                  String receiverName,
-                                                 String book
-    ) {
+                                                 String book) {
         SimpleMailMessage message = new SimpleMailMessage();
 
         message.setFrom("blogemailservice512@gmail.com");
@@ -79,8 +74,7 @@ public class EmailService {
                 "Приятно четене! \n"
 
         );
-        message.setSubject("Просрочен срок за връщане");
-
+        message.setSubject("Книгомания - Просрочен срок за връщане");
         mailSender.send(message);
     }
 }
