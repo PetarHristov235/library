@@ -46,12 +46,14 @@
             <thead >
             <tr>
                 <th>Книги</th>
+                <th>Дата</th>
             </tr>
             </thead >
 
             <tbody>
             <tr th:each="order : ${userOrders}">
                 <td th:text="${order.title}">book</td>
+                <td th:text="${order.date}">date</td>
             </tr>
             </tbody>
         </table>

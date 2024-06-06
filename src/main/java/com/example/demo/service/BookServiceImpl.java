@@ -78,6 +78,7 @@ public class BookServiceImpl implements  BookService {
     @Override
     public void decreaseBookStockCount(BookEntity book) {
         book.setStockCount(book.getStockCount()-1);
+        bookRepository.save(book);
     }
 
     @Override

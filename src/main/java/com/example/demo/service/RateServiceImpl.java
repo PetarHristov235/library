@@ -17,7 +17,6 @@ public class RateServiceImpl implements RateService {
         rateRepository.save(rateEntity);
     }
 
-
     @Override
     public List<RateEntity> findRatesByBookId(Long bookId) {
         return rateRepository.findRatesByBookId(bookId);
