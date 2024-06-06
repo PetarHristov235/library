@@ -32,26 +32,46 @@ public class SecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) ->
                         authorize
-                                .requestMatchers(
-                                        antMatcher("/login"),
-                                        antMatcher("/login/**"),
-                                        antMatcher("/register"),
-                                        antMatcher("/registerProcessing"),
-                                        antMatcher("/"),
-                                        antMatcher("bookDetails"),
-                                        antMatcher("index"),
-                                        antMatcher("/css/**"),
-                                        //For testing
-                                        antMatcher("/addBook"),
-                                        antMatcher("/listUsers"),
-                                        antMatcher("/random"),
-                                        antMatcher("/filteredBooks"),
-                                        antMatcher("/search"),
-                                        antMatcher("/books/*")
-                                )
+                                .requestMatchers("/",
+                                        "/login",
+                                        "/register",
+                                        "/registerProcessing",
+                                        "/loginProcessing",
+                                        "/books/sort",
+                                        "/books/filter",
+                                        "/books/*")
                                 .permitAll()
 
-                                .anyRequest().authenticated()
+                                .requestMatchers("/random",
+                                        "/orderBook/*",
+                                        "/confirmOrder/*",
+                                        "/rateBook/*",
+                                        "/saveRating")
+                                .hasRole("USER")
+
+                                .requestMatchers("/bookStock",
+                                        "/addBook",
+                                        "/saveBook",
+                                        "/editBook/*",
+                                        "/deleteBook/*",
+                                        "/listOrders",
+                                        "/deleteOrder/*",
+                                        "/remind/*",
+                                        "/showRates/*",
+                                        "/listUsers",
+                                        "/deleteUser/*",
+                                        "/banUser/*",
+                                        "/activateUser/*")
+                                .hasRole("ADMIN")
+
+                                .requestMatchers("/profile")
+                                .authenticated()
+
+                                .requestMatchers(
+                                        antMatcher("/css/**")
+                                ).permitAll()
+
+                        .anyRequest().authenticated()
                 )
                 .logout(
                         logout -> logout
