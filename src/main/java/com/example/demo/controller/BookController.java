@@ -2,8 +2,10 @@ package com.example.demo.controller;
 
 
 import com.example.demo.db.entity.BookEntity;
+import com.example.demo.db.entity.RateEntity;
 import com.example.demo.db.repository.BookRepository;
 import com.example.demo.service.BookService;
+import com.example.demo.service.RateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,39 +21,45 @@ import java.util.List;
 public class BookController {
     private final BookService bookService;
     private final BookRepository bookRepository;
+    private final RateService rateService;
     private List<BookEntity> currentBooks;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public ModelAndView showHomePage(Model model) {
         currentBooks = bookService.findAllBooks();
-        model.addAttribute("books", currentBooks);
-        return "index";
+
+        return new ModelAndView("index",
+                "books",
+                currentBooks);
     }
 
 
     @GetMapping("/books/sort")
-    public String sortBooksList(@RequestParam String sortBy, Model model) {
+    public ModelAndView sortBooksList(@RequestParam String sortBy, Model model) {
         if (currentBooks == null) {
             currentBooks = bookService.findAllBooks();
         }
         currentBooks = bookService.sortBooks(currentBooks, sortBy);
-        model.addAttribute("books", currentBooks);
-        return "index";
+
+        return new ModelAndView("index",
+                "books",
+                currentBooks);
     }
 
     @GetMapping("/books/filter")
-    public String filterBooksList(@RequestParam String filterBy, String filterText, Model model) {
+    public ModelAndView filterBooksList(@RequestParam String filterBy, String filterText, Model model) {
         if (currentBooks == null) {
             currentBooks = bookService.findAllBooks();
         }
-
         currentBooks = bookService.filterBooks(currentBooks, filterBy, filterText);
-        model.addAttribute("books", currentBooks);
-        return "index";
+
+        return new ModelAndView("index",
+                "books",
+                currentBooks);
     }
 
     @GetMapping("/random")
-    public ModelAndView randomBook() {
+    public ModelAndView getRandomBook() {
         BookEntity randomBook = bookService.getRandomBook();
 
         if (randomBook != null) {
@@ -62,35 +70,37 @@ public class BookController {
     }
 
     @GetMapping("/books/{id}")
-    public ModelAndView bookDetails(@PathVariable("id") Long id) {
+    public ModelAndView showBookDetails(@PathVariable("id") Long id) {
         BookEntity book = bookService.getBookById(id);
+        List<RateEntity> rates = rateService.findRatesByBookId(id);
 
         ModelAndView modelAndView = new ModelAndView("bookDetails");
-
         modelAndView.addObject("book", book);
+        modelAndView.addObject("rates", rates);
 
         return modelAndView;
     }
 
     @GetMapping("/bookStock")
-    public ModelAndView listOrders(Model model) {
-        ModelAndView modelAndView = new ModelAndView("booksStock");
-
+    public ModelAndView showBooksStock(Model model) {
         List<BookEntity> allBooks = bookService.findAllBooks();
-        modelAndView.addObject("books", allBooks);
-        return modelAndView;
+
+        return new ModelAndView("booksStock",
+                "books",
+                allBooks);
     }
 
     @GetMapping("/addBook")
-    public ModelAndView addBook() {
+    public ModelAndView addNewBook() {
         BookEntity book = new BookEntity();
-        ModelAndView modelAndView = new ModelAndView("addBook");
-        modelAndView.addObject("book", book);
-        return modelAndView;
+
+        return new ModelAndView("addBook",
+                "book",
+                book);
     }
 
     @PostMapping("/saveBook")
-    public String addBook(@ModelAttribute("book") BookEntity book, @RequestParam("image") MultipartFile image) {
+    public ModelAndView saveNewBook(@ModelAttribute("book") BookEntity book, @RequestParam("image") MultipartFile image) {
         try {
                 if (!image.isEmpty()) {
                     book.setCover(image.getBytes());
@@ -99,26 +109,27 @@ public class BookController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        return "redirect:/";
+
+        return new ModelAndView("redirect:/");
     }
 
     @GetMapping("/editBook/{id}")
-    public ModelAndView editBookForm(@PathVariable(value = "id") long id) {
+    public ModelAndView showEditBookForm(@PathVariable(value = "id") long id) {
         BookEntity book = bookService.getBookById(id);
-        ModelAndView modelAndView = new ModelAndView("editBook");
-        modelAndView.addObject("book", book);
-        return modelAndView;
+
+        return new ModelAndView("editBook",
+                "book",
+                book);
     }
 
     @PostMapping("/editBook")
-    public String editBook(@ModelAttribute BookEntity book,
+    public ModelAndView saveEditBook(@ModelAttribute BookEntity book,
                            @RequestParam("image") MultipartFile image) {
         try {
             BookEntity existingBook = bookService.getBookById(book.getId());
             if (!image.isEmpty()) {
                 existingBook.setCover(image.getBytes());
             }
-
             existingBook.setBookName(book.getBookName());
             existingBook.setAuthor(book.getAuthor());
             existingBook.setGenre(book.getGenre());
@@ -127,16 +138,16 @@ public class BookController {
 
             bookService.saveBook(existingBook);
         } catch (IOException e) {
-            e.printStackTrace();
-            return "redirect:/editBook/" + book.getId() + "?error";
+            return new ModelAndView("redirect:/editBook/" + book.getId() + "?error");
         }
-        return "redirect:/books/" + book.getId();
+
+        return new ModelAndView("redirect:/books/" + book.getId());
     }
 
     @GetMapping(value="/deleteBook/{id}")
-    public String deleteBook(@PathVariable Long id) {
+    public ModelAndView deleteBook(@PathVariable Long id) {
         bookService.deleteBookById(id);
-        return "redirect:/";
-    }
 
+        return new ModelAndView("redirect:/");
+    }
 }

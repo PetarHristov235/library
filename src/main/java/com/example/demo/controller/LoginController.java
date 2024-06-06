@@ -38,27 +38,23 @@ public class LoginController {
     private UserService userService;
 
     @GetMapping("/login")
-    public String login(Model model) {
+    public String showLoginForm() {
         return "login";
     }
 
     @PostMapping("/loginProcessing")
     public String loginProcessing(@RequestParam("username") String username,
-                                  @RequestParam("password") String password,
-                                  Model model) {
-
+                                  @RequestParam("password") String password) {
         if(userRepository.existByUsernameAndPassword(username, passwordEncoder.encode(password))){
             return "redirect:/";
-
         }else{
             return "redirect:/login";
         }
-
     }
 
 
     @GetMapping("/register")
-    public ModelAndView register(Model model) {
+    public ModelAndView showRegistrationForm() {
         return new ModelAndView("register",
                 "user",
                 new UserEntity());
@@ -66,7 +62,6 @@ public class LoginController {
 
     @PostMapping("/registerProcessing")
     public ModelAndView registerProcessing(@ModelAttribute("user") UserEntity user, BindingResult result) {
-
         validateData(user, result);
 
         if (result.hasErrors()) {
@@ -105,12 +100,12 @@ public class LoginController {
         if (DataValidation.isValidPassword(user.getPassword())) {
             result.rejectValue("password",
                     "invalid.password",
-                    "Невалидна парола!");
+                    "Паролата трябва да съдържа поне 5 символа!");
         }
         if (userService.existsUserEmail(user.getEmail())) {
             result.rejectValue("email",
                     "duplicate.email",
-                    "Имейл е зает!");
+                    "Имейлът е зает!");
         }
         if (userService.existsUsername(user.getUsername())) {
             result.rejectValue("username",

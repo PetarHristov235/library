@@ -23,10 +23,11 @@ public class UserController {
 
     @GetMapping("/listUsers")
     public ModelAndView listUsers() {
-        ModelAndView modelAndView = new ModelAndView("users");
         List<UserEntity> users = userService.findAllUsers();
-        modelAndView.addObject("users", users);
-        return modelAndView;
+
+        return new ModelAndView("users",
+                "users",
+                users);
     }
 
     @GetMapping("/profile")
@@ -47,17 +48,20 @@ public class UserController {
     @GetMapping(value="/deleteUser/{id}")
     public ModelAndView deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+
         return new ModelAndView("redirect:/listUsers");
     }
 
     @GetMapping(value="/banUser/{id}")
     public ModelAndView banUser(@PathVariable Long id) {
         userService.banUser(id);
+
         return new ModelAndView("redirect:/listUsers");
     }
     @GetMapping(value="/activateUser/{id}")
     public ModelAndView activateUser(@PathVariable Long id) {
         userService.activateUser(id);
+
         return new ModelAndView("redirect:/listUsers");
     }
 }

@@ -36,7 +36,7 @@ public class OrderController {
     private EmailService emailService;
 
     @GetMapping(value = "/orderBook/{id}")
-    public ModelAndView order(@PathVariable Long id){
+    public ModelAndView showOrderForm(@PathVariable Long id){
         ModelAndView modelAndView = new ModelAndView("confirmOrder");
 
         modelAndView.addObject("book", bookService.getBookById(id));
@@ -46,18 +46,18 @@ public class OrderController {
     }
 
     @PostMapping(value="/confirmOrder/{id}")
-    public ModelAndView submitOrder(@PathVariable Long id,
+    public ModelAndView confirmOrder(@PathVariable Long id,
                                     @ModelAttribute("order") OrderEntity order,
-                                    BindingResult result,
-                                    RedirectAttributes redirectAttributes) {
+                                    BindingResult result) {
 
         BookEntity book=bookService.getBookById(id);
         UserEntity receiver=userService.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 
         if (!DataValidation.isValidPhoneNumber(order.getPhoneNumber())) {
-            result.rejectValue("phoneNumber", "invalid.phone", "Invalid phone number!");}
+            result.rejectValue("phoneNumber",
+                    "invalid.phone",
+                    "Невалиден телефонен номер!");}
         if (result.hasErrors()) {
-
             return new ModelAndView("confirmOrder",
                     "book",
                     book);
@@ -81,7 +81,6 @@ public class OrderController {
                 String.valueOf(newOrder.getDate()),
                 String.valueOf(newOrder.getId())
         );
-
         bookService.decreaseBookStockCount(book);
 
         return new ModelAndView("redirect:/");
@@ -96,7 +95,6 @@ public class OrderController {
 
     @GetMapping("/deleteOrder/{id}")
     public ModelAndView deleteOrder(@PathVariable Long id){
-
         orderService.deleteOrderById(id);
 
         return new ModelAndView("redirect:/listOrders");
@@ -106,7 +104,6 @@ public class OrderController {
     public ModelAndView remindDeadline(@PathVariable Long id){
         OrderEntity order=orderService.findOrderById(id);
         UserEntity user = userService.getUserByUsername(order.getUsername());
-
         emailService.orderDeadlineOverdueEmail(user.getEmail(),
                                                 user.getName(),
                                                 order.getTitle());

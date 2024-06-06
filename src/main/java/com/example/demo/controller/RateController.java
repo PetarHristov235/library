@@ -20,27 +20,32 @@ public class RateController {
     private final RateService rateService;
 
     @GetMapping("/rateBook/{id}")
-    ModelAndView rateBook(@PathVariable Long id, Model model) {
+    ModelAndView rateBook(@PathVariable Long id){
         RateEntity rateEntity = new RateEntity();
         rateEntity.setBookId(id);
-        model.addAttribute("rateEntity", rateEntity);
-        return new ModelAndView("rateBook");
+
+        return new ModelAndView("rateBook",
+                "rateEntity",
+                rateEntity);
     }
 
     @PostMapping("/saveRating")
-    public String saveRating(@ModelAttribute RateEntity rateEntity,
-                             BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public ModelAndView saveRating(@ModelAttribute RateEntity rateEntity,
+                                   RedirectAttributes redirectAttributes) {
         if (rateEntity.getRate() == null) {
             redirectAttributes.addFlashAttribute("error", "Моля, изберете оценка.");
-            return "redirect:/rateBook/" + rateEntity.getBookId();
+            return new ModelAndView("redirect:/rateBook/" + rateEntity.getBookId());
         }
         rateService.saveRating(rateEntity);
-        return "redirect:/";
+
+        return new ModelAndView("redirect:/");
     }
 
     @GetMapping("/showRates/{id}")
-    ModelAndView showRates(@PathVariable Long id, Model model) {
-        model.addAttribute("rates", rateService.findRatesByBookId(id));
-        return new ModelAndView("showRates");
+    ModelAndView showRates(@PathVariable Long id) {
+
+        return new ModelAndView("showRates",
+                "rates",
+                rateService.findRatesByBookId(id));
     }
 }
