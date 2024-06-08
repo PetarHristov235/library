@@ -12,6 +12,7 @@ html, body {
 h1{
     color: #FFFFFF;
 }
+
 .container-books {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));

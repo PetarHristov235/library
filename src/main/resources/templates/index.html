@@ -23,7 +23,7 @@
     <div class="topnav-right">
         <a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
         <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Вход</a>
-        <a sec:authorize="isAuthenticated()" th:href="@{/profile}">Моят профил</a>
+        <a sec:authorize="hasRole('USER')" th:href="@{/profile}">Моят профил</a>
         <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Изход</a>
     </div>
 </div>
@@ -58,22 +58,20 @@
 <div class="container-books">
     <div th:each="book : ${books}">
         <a th:href="@{/books/{id}(id=${book.id})}">
-            <div class="book">
+        <div class="book">
                 <div class="image-container">
                     <div th:if="${book.stockCount == 0}" class="coming-soon">Очаквайте скоро</div>
                     <img th:src="'data:image/jpeg;base64,' + ${book.coverBase64encoded}" alt="Book cover"/>
                 </div>
-            <div>
-                <p th:text="${book.bookName}"></p>
-                <p th:text="${book.author}"></p>
-                <p th:text="${book.genre}"></p>
-                <p th:text="${#numbers.formatDecimal(book.avgRate, 1, 'COMMA', 2, 'POINT')}"></p>
-            </div>
+            <p th:text="${book.bookName}"></p>
+            <div class="book-info">
+                    <p th:text="${book.author}"></p>
+                    <p th:text="${book.genre}"></p>
+                    <p th:text="${#numbers.formatDecimal(book.avgRate, 1, 'COMMA', 2, 'POINT')}"></p>
+                </div>
         </div>
         </a>
     </div>
 </div>
-
 </body>
-
 </html>

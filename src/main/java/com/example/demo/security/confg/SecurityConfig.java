@@ -46,7 +46,8 @@ public class SecurityConfig {
                                         "/orderBook/*",
                                         "/confirmOrder/*",
                                         "/rateBook/*",
-                                        "/saveRating")
+                                        "/saveRating",
+                                        "/profile")
                                 .hasRole("USER")
 
                                 .requestMatchers("/bookStock",
@@ -63,10 +64,7 @@ public class SecurityConfig {
                                         "/banUser/*",
                                         "/activateUser/*")
                                 .hasRole("ADMIN")
-
-                                .requestMatchers("/profile")
-                                .authenticated()
-
+                                
                                 .requestMatchers(
                                         antMatcher("/css/**")
                                 ).permitAll()
