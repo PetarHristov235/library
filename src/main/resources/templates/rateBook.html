@@ -28,6 +28,7 @@
 <br>
 <br>
 
+<h1>Оцени</h1>
 
 <div class="wrapper">
 <form action="/saveRating" method="post" th:object="${rateEntity}" class="form">
@@ -51,7 +52,7 @@
     <label for="comment"><h2>Коментар:</h2></label><br>
     <textarea id="comment" name="comment" rows="4" cols="50" th:field="*{comment}"></textarea><br>
     <input type="hidden" id="bookId" name="bookId" value="${bookId}" th:field="*{bookId}">
-    <input type="submit" class="buttons" value="ОЦЕНИ">
+    <input type="submit" class="buttons" value="Оцени">
 </form>
 </div>
 
