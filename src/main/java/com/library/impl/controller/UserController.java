@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
-г@RestController
+@RestController
 @RequiredArgsConstructor
 public class UserController {
 
