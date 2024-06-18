@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
-@RestController
+г@RestController
 @RequiredArgsConstructor
 public class UserController {
 
@@ -38,7 +38,7 @@ public class UserController {
         UserEntity currentUser = userService.getUserByUsername(username);
         List<OrderEntity> userOrders = orderService.getOrdersByUsername(username);
 
-        ModelAndView modelAndView = new ModelAndView("profile");
+        ModelAndView modelAndView = new ModelAndView("profile");public
         modelAndView.addObject("userProfile", currentUser);
         modelAndView.addObject("userOrders", userOrders);
 

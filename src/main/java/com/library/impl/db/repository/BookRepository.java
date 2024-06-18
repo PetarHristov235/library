@@ -15,26 +15,6 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
 
     @Query("""
             SELECT b FROM BookEntity b
-            WHERE b.bookName = :bookName""")
-    BookEntity findBookByBookName(@Param("bookName") String bookName);
-
-    @Query("""
-            SELECT b FROM BookEntity b
-            WHERE b.genre = :genre""")
-    List<BookEntity> findBooksByGenre(@Param("genre") String bookName);
-
-    @Query("""
-            DELETE FROM BookEntity b
-            WHERE b.bookName = :bookName""")
-    void deleteBookByBookName(@Param("bookName") String bookName);
-
-    @Query("""
-            SELECT b FROM BookEntity b
-            WHERE b.author = :author""")
-    List<BookEntity> searchBookByAuthor(@Param("author") String author);
-
-    @Query("""
-            SELECT b FROM BookEntity b
             WHERE b.id = :id""")
     Optional<BookEntity> findById(Long id);
 }
