@@ -38,7 +38,7 @@ public class UserController {
         UserEntity currentUser = userService.getUserByUsername(username);
         List<OrderEntity> userOrders = orderService.getOrdersByUsername(username);
 
-        ModelAndView modelAndView = new ModelAndView("profile");public
+        ModelAndView modelAndView = new ModelAndView("profile");
         modelAndView.addObject("userProfile", currentUser);
         modelAndView.addObject("userOrders", userOrders);
 
