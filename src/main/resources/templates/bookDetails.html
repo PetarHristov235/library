@@ -34,9 +34,9 @@
     <div th:if="${book != null}">
         <div class="book-details">
             <h2><span th:text="${book.bookName}"></span></h2>
-            <div class="image-container">
-                <img th:src="'data:image/jpeg;base64,' + ${book.coverBase64encoded}" alt="Book cover" />
-            </div>
+                <div class="image-container">
+                    <img th:src="'data:image/jpeg;base64,' + ${book.coverBase64encoded}" alt="Book cover" />
+                </div>
             <div>
                 <p>Автор: <span th:text="${book.author}"></span></p>
                 <p>Жанр: <span th:text="${book.genre}"></span></p>

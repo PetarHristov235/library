@@ -64,7 +64,7 @@ public class SecurityConfig {
                                         "/banUser/*",
                                         "/activateUser/*")
                                 .hasRole("ADMIN")
-                                
+
                                 .requestMatchers(
                                         antMatcher("/css/**")
                                 ).permitAll()
