@@ -23,7 +23,7 @@
     <div class="topnav-right">
         <a sec:authorize="!isAuthenticated()" th:href="@{/register}">Регистрация</a>
         <a sec:authorize="!isAuthenticated()" th:href="@{/login}">Вход</a>
-        <a sec:authorize="isAuthenticated()" th:href="@{/profile}">Моят профил</a>
+        <a sec:authorize="hasRole('USER')" th:href="@{/profile}">Моят профил</a>
         <a sec:authorize="isAuthenticated()" th:href="@{/logout}">Изход</a>
     </div>
 </div>
