@@ -9,6 +9,7 @@ import com.library.impl.service.RateService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -100,17 +101,27 @@ public class BookController {
     }
 
     @PostMapping("/saveBook")
-    public ModelAndView saveNewBook(@ModelAttribute("book") BookEntity book, @RequestParam("image") MultipartFile image) {
+    public String saveNewBook(@ModelAttribute("book") BookEntity book, BindingResult result,
+                              @RequestParam("image") MultipartFile image, Model model) {
+        if (bookRepository.existsByTitle(book.getBookName())) {
+            result.rejectValue("bookName", "error.book", "Книгата, която се опитвате да добавите," +
+                    " вече съществува");
+        }
+
+        if (result.hasErrors()) {
+            return "addBook";
+        }
+
         try {
-                if (!image.isEmpty()) {
-                    book.setCover(image.getBytes());
-                }
+            if (!image.isEmpty()) {
+                book.setCover(image.getBytes());
+            }
             bookService.saveBook(book);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        return new ModelAndView("redirect:/");
+        return "redirect:/";
     }
 
     @GetMapping("/editBook/{id}")
@@ -124,7 +135,7 @@ public class BookController {
 
     @PostMapping("/editBook")
     public ModelAndView saveEditBook(@ModelAttribute BookEntity book,
-                           @RequestParam("image") MultipartFile image) {
+                                     @RequestParam("image") MultipartFile image) {
         try {
             BookEntity existingBook = bookService.getBookById(book.getId());
             if (!image.isEmpty()) {
@@ -144,7 +155,7 @@ public class BookController {
         return new ModelAndView("redirect:/books/" + book.getId());
     }
 
-    @GetMapping(value="/deleteBook/{id}")
+    @GetMapping(value = "/deleteBook/{id}")
     public ModelAndView deleteBook(@PathVariable Long id) {
         bookService.deleteBookById(id);
 

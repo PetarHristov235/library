@@ -17,4 +17,9 @@ public interface BookRepository extends JpaRepository<BookEntity, Long> {
             SELECT b FROM BookEntity b
             WHERE b.id = :id""")
     Optional<BookEntity> findById(Long id);
+
+    @Query("""
+    SELECT EXISTS(SELECT 1 FROM BookEntity b WHERE b.bookName = :bookName)
+    """)
+    boolean existsByTitle(@Param("bookName") String bookName);
 }

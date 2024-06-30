@@ -43,6 +43,7 @@
         <div class="row">
             <div class="col-25"><label>Заглавие</label></div>
             <div class="col-75"><input id="bookName" name="title" placeholder="Въведи заглавие... " th:field="*{bookName}" type="text"/></div>
+            <p th:if="${#fields.hasErrors('bookName')}" th:errors="*{bookName}" class="error"></p>
         </div>
 
         <div class="row">
